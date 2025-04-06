@@ -1,4 +1,5 @@
     body {
-        background-image: url ('https://files.catbox.moe/oovotp.jpg')
+        background-image: url ('https://files.catbox.moe/oovotp.jpg');
         background-size: cover;
+        background-repeat: no-repeat;
     }
