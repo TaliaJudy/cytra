@@ -1,26 +1,143 @@
-<html>
-  <title>cytra's photos </title>
-  
-  <head>
-    <style>
-      body {
-        background-image: url ('https://files.catbox.moe/oovotp.jpg')
-        background-size: cover;
-      }
-    </style>
-    <meta-charset="UTF-8"
-  </head>
-  <img height="600px" width="500px" src ="1.jpg">
-  <hr>
-  <img height="600px" width="500px" src= "2.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "3.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "4.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "5.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "7.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "9.jpg">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cytra's Photos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #fff;
+      --text: #000;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    .hidden { display: none; }
+    .image-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    img {
+      height: 600px;
+      width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      transition: opacity 0.5s;
+    }
+    .caption-overlay {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .thumbnails {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .thumbnail {
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      object-fit: cover;
+      border: 2px solid #ccc;
+    }
+    .buttons {
+      margin: 20px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .reactions {
+      font-size: 24px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .info-bar {
+      margin: 10px;
+      font-size: 18px;
+    }
+    #theme-select {
+      font-size: 16px;
+      padding: 5px;
+    }
+    .download-btn {
+      font-size: 28px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    #age-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      z-index: 9999;
+    }
+    #age-modal button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body class="hidden">
+
+<div id="age-modal">
+  <h2>This site is for users 16 years and older</h2>
+  <button onclick="acceptAge()">I am 16 or older</button>
+</div>
+
+<div class="info-bar">
+  <span id="date-time"></span> |
+  Theme:
+  <select id="theme-select" onchange="changeTheme()">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+    <option value="yellow">Yellow</option>
+    <option value="blue">Blue</option>
+  </select>
+</div>
+
+<div class="image-container">
+  <img id="main-image" src="1.jpg" alt="Photo">
+  <div class="caption-overlay" id="caption">Welcome to Cytra's Gallery!</div>
+</div>
+
+<div class="buttons">
+  <button onclick="prevImage()">⬅️ Prev</button>
+  <button onclick="nextImage()">Next ➡️</button>
+</div>
+
+<div class="thumbnails" id="thumbnails"></div>
+
+<div class="reactions" onclick="addReaction(this)">👍 ❤️ 😂 😮 😢 👎</div>
+<a class="download-btn" id="download" href="1.jpg" download>🗿</a>
+
+<audio id="background-audio" autoplay loop hidden>
+  <source id="audio-source" src="phonk1.mp3" type="audio/mpeg">
+</audio>
+
+<script src="index.js"></script>
+</body>
 </html>
