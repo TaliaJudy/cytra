@@ -1,26 +1,68 @@
-<html>
-  <title>cytra's photos </title>
-  
-  <head>
-    <style>
-      body {
-        background-image: url ('https://files.catbox.moe/oovotp.jpg')
-        background-size: cover;
-      }
-    </style>
-    <meta-charset="UTF-8"
-  </head>
-  <img height="600px" width="500px" src ="1.jpg">
-  <hr>
-  <img height="600px" width="500px" src= "2.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "3.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "4.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "5.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "7.jpg">
-  <hr>
-   <img height="600px" width="500px" src= "9.jpg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cytra Gallery - Stunning Visuals</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js" type="module"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js" type="module"></script>
+
+</head>
+<body>
+
+<div id="welcomeModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2>Welcome to Cytra's Photos</h2>
+    <p>Enjoy the collection of beautiful memories.</p>
+    <button id="closeModalBtn">Enter Gallery</button>
+  </div>
+</div>
+
+<script>alert("Welcome to Cytra's Photos");</script>
+
+<div id="loginScreen" class="login-screen">
+  <h2>Login to View Gallery</h2>
+  <input type="email" id="email" placeholder="Email" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <button id="loginBtn">Login</button>
+  <p id="loginError" class="error-text"></p>
+</div>
+
+  <header>
+    <h1>Cytra Gallery</h1>
+    <p>Browse a beautiful collection of your images.</p>
+    <button id="themeToggle" class="theme-toggle">🌙</button>
+</header>
+
+  <main class="gallery">
+    <div class="gallery-grid">
+      <img src="images/1.jpg" alt="1" class="gallery-img" loading="lazy" />
+      <img src="images/2.jpg" alt="2" class="gallery-img" loading="lazy" />
+      <img src="images/3.jpg" alt="3" class="gallery-img" loading="lazy" />
+      <img src="images/4.jpg" alt="4" class="gallery-img" loading="lazy" />
+      <img src="images/5.jpg" alt="5" class="gallery-img" loading="lazy" />
+      <img src="images/7.jpg" alt="7" class="gallery-img" loading="lazy" />
+      <img src="images/9.jpg" alt="9" class="gallery-img" loading="lazy" />
+      <img src="images/IMG_20250105_185933.jpg" alt="IMG_20250105_185933" class="gallery-img" loading="lazy" />
+      <img src="images/IMG_20250405_195801.jpg" alt="IMG_20250405_195801" class="gallery-img" loading="lazy" />
+    </div>
+  </main>
+  <footer class="footer">
+    <div id="clock" class="clock"></div>
+    <div id="calendar" class="calendar"></div>
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <span class="close" id="closeBtn">&times;</span>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    <a id="downloadBtn" href="#" download class="download-btn">⬇️ Download</a>
+  </div>
+
+  <script src="index.js"></script>
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+</script>
+<audio id="bgAudio" loop autoplay hidden></audio>
+</body>
 </html>
