@@ -38,7 +38,6 @@
     }
     #yesBtn { background-color: #28a745; color: white; }
     #noBtn { background-color: #dc3545; color: white; }
-
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -123,7 +122,6 @@
       background-color: #444;
       transform: scale(1.1);
     }
-
     @media (max-width: 768px) {
       body { font-size: 18px; }
       .download-btn { font-size: 20px; padding: 16px 32px; }
@@ -140,7 +138,7 @@
 <body>
 
 <audio id="bgMusic" autoplay loop style="display: none;">
-  <source src="AUD-20250421-WA0004.m4a" type="audio/mpeg">
+  <source src="AUD-20250421-WA0004.m4a" type="audio/mp4">
 </audio>
 
 <div id="ageGate">
@@ -152,24 +150,25 @@
 </div>
 
 <div class="gallery" style="display: none;">
-  <img src="1.jpg" loading="lazy" alt="Image 1">
-  <img src="2.jpg" loading="lazy" alt="Image 2">
-  <img src="3.jpg" loading="lazy" alt="Image 3">
-  <img src="4.jpg" loading="lazy" alt="Image 4">
-  <img src="5.jpg" loading="lazy" alt="Image 5">
-  <img src="6.jpg" loading="lazy" alt="Image 6">
-  <img src="7.jpg" loading="lazy" alt="Image 7">
-  <img src="8.jpg" loading="lazy" alt="Image 8">
-  <img src="9.jpg" loading="lazy" alt="Image 9">
-  <img src="10.jpg" loading="lazy" alt="Image 10">
-  <img src="11.jpg" loading="lazy" alt="Image 11">
-  <img src="12.jpg" loading="lazy" alt="Image 12">
-  <img src="13.jpg" loading="lazy" alt="Image 13">
-  <img src="14.jpg" loading="lazy" alt="Image 14">
-  <img src="15.jpg" loading="lazy" alt="Image 15">
-  <img src="16.jpg" loading="lazy" alt="Image 16">
-  <img src="17.jpg" loading="lazy" alt="Image 17">
-  <img src="18.jpg" loading="lazy" alt="Image 18">
+  <!-- Images from 1.jpg to 18.jpg -->
+  <img src="1.jpg" alt="Image 1" loading="lazy">
+  <img src="2.jpg" alt="Image 2" loading="lazy">
+  <img src="3.jpg" alt="Image 3" loading="lazy">
+  <img src="4.jpg" alt="Image 4" loading="lazy">
+  <img src="5.jpg" alt="Image 5" loading="lazy">
+  <img src="6.jpg" alt="Image 6" loading="lazy">
+  <img src="7.jpg" alt="Image 7" loading="lazy">
+  <img src="8.jpg" alt="Image 8" loading="lazy">
+  <img src="9.jpg" alt="Image 9" loading="lazy">
+  <img src="10.jpg" alt="Image 10" loading="lazy">
+  <img src="11.jpg" alt="Image 11" loading="lazy">
+  <img src="12.jpg" alt="Image 12" loading="lazy">
+  <img src="13.jpg" alt="Image 13" loading="lazy">
+  <img src="14.jpg" alt="Image 14" loading="lazy">
+  <img src="15.jpg" alt="Image 15" loading="lazy">
+  <img src="16.jpg" alt="Image 16" loading="lazy">
+  <img src="17.jpg" alt="Image 17" loading="lazy">
+  <img src="18.jpg" alt="Image 18" loading="lazy">
 </div>
 
 <button id="backBtn" title="Back">🔙</button>
@@ -210,8 +209,8 @@
       "Soft light glow ✨", "Lost in beauty 💫", "Ocean breeze 🌊",
       "Misty mornings 🌫️", "Starry nights 🌌", "Frozen frame ❄️"
     ];
-    const imgs = document.querySelectorAll(".gallery img");
 
+    const imgs = document.querySelectorAll(".gallery img");
     imgs.forEach((img, idx) => {
       const wrapper = document.createElement("div");
       wrapper.style.position = "relative";
@@ -271,10 +270,14 @@
       setTimeout(() => alertBox.remove(), 500);
     }, 2500);
 
-    const now = new Date();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const footer = document.createElement("div");
-    footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
+    function updateClock() {
+      const now = new Date();
+      footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
     footer.style.marginTop = "40px";
     footer.style.fontSize = "20px";
     footer.style.color = "#fff";
