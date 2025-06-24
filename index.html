@@ -1,345 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jack's Pics</title>
-  <style>
-    body {
-      text-align: center;
-      padding: 20px;
-      background-image: url('https://files.catbox.moe/fmd1z6.jpg');
-      background-size: cover;
-      font-family: sans-serif;
-      font-size: 20px;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    #ageGate {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: rgba(0,0,0,0.95);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-      color: white;
-      font-size: 22px;
-    }
-    #ageGate button {
-      margin: 15px;
-      padding: 12px 24px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    #yesBtn { background-color: #28a745; color: white; }
-    #noBtn { background-color: #dc3545; color: white; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack's Pics ✨</title>
+<style>
+  body {
+    background: url('https://files.catbox.moe/fmd1z6.jpg') center/cover;
+    font-family: sans-serif;
+    color: white;
+    padding: 0;
+    margin: 0;
+  }
+  #ageGate {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.95); color: white; z-index: 9999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  #ageGate h2 { font-size: 24px; margin-bottom: 20px; }
+  #ageGate button {
+    padding: 12px 24px; font-size: 18px; margin: 10px; cursor: pointer; border: none; border-radius: 8px;
+  }
+  #yesBtn { background: #28a745; color: white; }
+  #noBtn { background: #dc3545; color: white; }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .gallery img {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      transition: transform 0.2s ease;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-    }
-    .caption {
-      font-size: 18px;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      padding: 6px 10px;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-      border-radius: 0 0 12px 12px;
-    }
-    .fullscreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background-color: rgba(0, 0, 0, 0.95);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      flex-direction: column;
-    }
-    .fullscreen img {
-      max-width: 90%;
-      max-height: 80%;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
-    }
-    .download-btn {
-      background-color: #ffffff30;
-      color: white;
-      padding: 20px 40px;
-      font-size: 26px;
-      border: 2px solid white;
-      border-radius: 12px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .download-btn:hover {
-      background-color: #ffffff50;
-      transform: scale(1.05);
-    }
-    #backBtn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #222;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 36px;
-      width: 70px;
-      height: 70px;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      z-index: 1001;
-      display: none;
-    }
-    #backBtn:hover {
-      background-color: #444;
-      transform: scale(1.1);
-    }
-    @media (max-width: 480px) {
-      #backBtn {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-      }
-    }
+  .music-controls { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 1002; }
+  .music-controls button {
+    background: linear-gradient(45deg,#ff0077,#ff8800,#ffee00,#00ff00,#00ffff,#8000ff); background-size: 400% 400%;
+    padding: 10px 16px; border:2px solid gold; color:white; border-radius:8px; cursor:pointer; font-size:18px;
+    animation: rainbowMove 4s ease infinite;
+  }
+  @keyframes rainbowMove { 0% {background-position:0% 50%}50% {background-position:100% 50%}100% {background-position:0% 50%} }
 
-    .time-box {
-      margin-top: 40px;
-      font-size: 22px;
-      color: #fff;
-      background: linear-gradient(135deg, #222, #444);
-      padding: 15px 30px;
-      border-radius: 12px;
-      display: inline-block;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-      text-align: center;
-      animation: pulseTime 5s infinite ease-in-out;
-      font-weight: 500;
-      letter-spacing: 1px;
-      transition: transform 0.3s ease;
-    }
-    .time-box:hover {
-      transform: scale(1.03);
-    }
-    @keyframes pulseTime {
-      0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.3); }
-      50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
-    }
-  </style>
+  .sound-visualizer { position: fixed; top:70px; right:20px; display:flex; gap:5px; z-index:1002; }
+  .sound-visualizer .bar {
+    width:6px; height:20px; background:linear-gradient(180deg,gold,orange,red); border-radius:2px;
+    opacity:0.9; animation:bounce 0.4s infinite alternate ease-in-out;
+  }
+  .sound-visualizer .bar:nth-child(1){animation-duration:0.35s}.sound-visualizer .bar:nth-child(2){animation-duration:0.45s}.sound-visualizer .bar:nth-child(3){animation-duration:0.25s}.sound-visualizer .bar:nth-child(4){animation-duration:0.5s}.sound-visualizer .bar:nth-child(5){animation-duration:0.4s}
+  @keyframes bounce {0%{transform:scaleY(0.3)}100%{transform:scaleY(1)}}
+
+  .progress-container { position: fixed; bottom:40px; left:50%; transform:translateX(-50%); width:80%; max-width:400px; height:8px; background:rgba(255,255,255,0.2); border-radius:4px; overflow:hidden; z-index:1002; }
+  .progress-bar { height:100%; width:0; background:linear-gradient(90deg,gold,orange,red); transition: width 0.1s linear; }
+
+  .gallery { display: none; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; padding:20px; max-width:1400px; margin:0 auto; }
+  figure { position:relative; margin:0; }
+  figure img { width:100%; border-radius:12px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); transition: transform 0.2s; }
+  figure img:hover { transform: scale(1.05); }
+  figure figcaption { position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.6); padding:8px; font-size:16px; text-align:center; border-radius:0 0 12px 12px; color:white; opacity:0; transition: opacity 0.3s; }
+  figure:hover figcaption { opacity:1; }
+
+  .fullscreen {
+    position: fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.95); display:flex;
+    flex-direction:column; align-items:center; justify-content:center; opacity:1; z-index:1003;
+  }
+  .fullscreen img { max-width:90%; max-height:80%; border-radius:12px; opacity:0; transition: opacity 0.3s ease, transform 0.3s ease; cursor:zoom-in; }
+  .fullscreen .close-btn {
+    position:absolute; top:20px; right:20px; background:rgba(0,0,0,0.5); color:white; border:none; border-radius:50%;
+    width:50px; height:50px; font-size:32px; cursor:pointer; box-shadow:0 0 8px rgba(255,255,255,0.3); transition: background 0.2s;
+  }
+  .close-btn:hover { background:rgba(255,255,255,0.3); }
+  .fullscreen .download-btn { background:#ffffff30; color:white; padding:14px 28px; font-size:22px; border:2px solid white; border-radius:12px; cursor:pointer; text-decoration:none; margin-top:20px; }
+  .fullscreen .download-btn:hover { background:#ffffff50; }
+</style>
 </head>
 <body>
 
-<audio id="bgMusic" autoplay loop style="display: none;">
-  <source id="musicSource" src="" type="audio/mp4">
-</audio>
+<audio id="bgMusic" autoplay loop style="display:none;"><source id="musicSource" src="" type="audio/mp4"></audio>
 
 <div id="ageGate">
   <h2>Are you 16 years or older?</h2>
-  <div>
-    <button id="yesBtn">✅ Yes, I am</button>
-    <button id="noBtn">❌ No, I'm not</button>
-  </div>
+  <button id="yesBtn">✅ Yes, I am</button>
+  <button id="noBtn">❌ No, I'm not</button>
 </div>
 
-<div class="gallery" style="display: none;">
-  <img src="1.jpg" alt="Image 1" loading="lazy">
-  <img src="2.jpg" alt="Image 2" loading="lazy">
-  <img src="3.jpg" alt="Image 3" loading="lazy">
-  <img src="4.jpg" alt="Image 4" loading="lazy">
-  <img src="5.jpg" alt="Image 5" loading="lazy">
-  <img src="6.jpg" alt="Image 6" loading="lazy">
-  <img src="7.jpg" alt="Image 7" loading="lazy">
-  <img src="8.jpg" alt="Image 8" loading="lazy">
-  <img src="9.jpg" alt="Image 9" loading="lazy">
-  <img src="10.jpg" alt="Image 10" loading="lazy">
-  <img src="11.jpg" alt="Image 11" loading="lazy">
-  <img src="12.jpg" alt="Image 12" loading="lazy">
-  <img src="13.jpg" alt="Image 13" loading="lazy">
-  <img src="14.jpg" alt="Image 14" loading="lazy">
-  <img src="15.jpg" alt="Image 15" loading="lazy">
-  <img src="16.jpg" alt="Image 16" loading="lazy">
-  <img src="17.jpg" alt="Image 17" loading="lazy">
-  <img src="18.jpg" alt="Image 18" loading="lazy">
+<div class="music-controls">
+  <button id="prevMusic">⏮️ Prev</button>
+  <button id="nextMusic">⏭️ Next</button>
 </div>
 
-<button id="backBtn" title="Back">🔙</button>
+<div class="sound-visualizer">
+  <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+</div>
+
+<div class="progress-container"><div class="progress-bar"></div></div>
+
+<div class="gallery">
+  <figure><img src="1.jpg" alt=""><figcaption>Captured moment ✨</figcaption></figure>
+  <figure><img src="2.jpg" alt=""><figcaption>Nature's touch 🌿</figcaption></figure>
+  <figure><img src="3.jpg" alt=""><figcaption>Smile snapshot 😊</figcaption></figure>
+  <figure><img src="4.jpg" alt=""><figcaption>Golden hour 🌇</figcaption></figure>
+  <figure><img src="5.jpg" alt=""><figcaption>Adventure time 🧭</figcaption></figure>
+  <figure><img src="6.jpg" alt=""><figcaption>Peaceful vibe ☁️</figcaption></figure>
+  <figure><img src="7.jpg" alt=""><figcaption>Life in colors 🎨</figcaption></figure>
+  <figure><img src="8.jpg" alt=""><figcaption>Chasing sunsets 🌅</figcaption></figure>
+  <figure><img src="9.jpg" alt=""><figcaption>Urban stories 🏙️</figcaption></figure>
+  <figure><img src="10.jpg" alt=""><figcaption>Hidden gems 💎</figcaption></figure>
+  <figure><img src="11.jpg" alt=""><figcaption>Free spirit 🕊️</figcaption></figure>
+  <figure><img src="12.jpg" alt=""><figcaption>Wanderlust 🌍</figcaption></figure>
+  <figure><img src="13.jpg" alt=""><figcaption>Soft light glow ✨</figcaption></figure>
+  <figure><img src="14.jpg" alt=""><figcaption>Lost in beauty 💫</figcaption></figure>
+  <figure><img src="15.jpg" alt=""><figcaption>Ocean breeze 🌊</figcaption></figure>
+  <figure><img src="16.jpg" alt=""><figcaption>Misty mornings 🌫️</figcaption></figure>
+  <figure><img src="17.jpg" alt=""><figcaption>Starry nights 🌌</figcaption></figure>
+  <figure><img src="18.jpg" alt=""><figcaption>Frozen frame ❄️</figcaption></figure>
+</div>
 
 <script>
-  // Inactivity auto-refresh
-  let inactivityTimer;
-  function resetInactivityTimer() {
-    clearTimeout(inactivityTimer);
-    inactivityTimer = setTimeout(() => {
-      location.reload();
-    }, 2 * 60 * 1000); // 2 minutes
-  }
-  ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
-    document.addEventListener(event, resetInactivityTimer);
-  });
-  resetInactivityTimer();
+let inactivityTimer;
+function resetInactivityTimer(){clearTimeout(inactivityTimer);inactivityTimer=setTimeout(()=>location.reload(),2*60*1000);}
+['click','mousemove','keydown','scroll','touchstart'].forEach(e=>document.addEventListener(e,resetInactivityTimer));
+resetInactivityTimer();
 
-  const musicFiles = [
-    "Die With A Smile.m4a",
-    "SHOKA.m4a",
-    "AUD-20250421-WA0004.m4a",
-    "Anxiety.m4a"
-  ];
-  function playRandomMusic() {
-    const randomFile = musicFiles[Math.floor(Math.random() * musicFiles.length)];
-    const music = document.getElementById("bgMusic");
-    const source = document.getElementById("musicSource");
-    source.src = randomFile;
-    music.load();
-    music.volume = 0;
-    music.play().then(() => {
-      let vol = 0;
-      const fadeIn = setInterval(() => {
-        vol += 0.05;
-        if (vol >= 0.5) {
-          music.volume = 0.5;
-          clearInterval(fadeIn);
-        } else {
-          music.volume = vol;
-        }
-      }, 200);
-    }).catch(err => {
-      console.warn("Autoplay might be blocked by the browser.", err);
-    });
-  }
+const musicFiles = ["Die With A Smile.m4a","SHOKA.m4a","AUD-20250421-WA0004.m4a","Anxiety.m4a"];
+let currentMusicIndex = 0;
+const audio=document.getElementById('bgMusic'); const source=document.getElementById('musicSource');
+function playMusic(i){currentMusicIndex=(i+musicFiles.length)%musicFiles.length;source.src=musicFiles[currentMusicIndex];audio.load();audio.volume=0;audio.play().then(()=>{let v=0;const fade=setInterval(()=>{v+=0.05;if(v>=0.5){audio.volume=0.5;clearInterval(fade);}else{audio.volume=v;}},200);});}
+document.getElementById('prevMusic').onclick=()=>playMusic(currentMusicIndex-1);document.getElementById('nextMusic').onclick=()=>playMusic(currentMusicIndex+1);
 
-  document.getElementById("yesBtn").onclick = function () {
-    document.getElementById("ageGate").style.display = "none";
-    document.querySelector(".gallery").style.display = "grid";
-    document.getElementById("backBtn").style.display = "block";
-    playRandomMusic();
-  };
-  document.getElementById("noBtn").onclick = function () {
-    alert("You must be 16 or older to access this site.");
-    window.location.href = "https://www.google.com";
-  };
+document.getElementById('yesBtn').onclick=function(){document.getElementById('ageGate').style.display='none';document.querySelector('.gallery').style.display='grid';playMusic(0);};
+document.getElementById('noBtn').onclick=function(){alert('You must be 16 or older!');window.location.href='https://www.google.com';};
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const captions = [
-      "Captured moment ✨", "Nature's touch 🌿", "Smile snapshot 😊",
-      "Golden hour 🌇", "Adventure time 🧭", "Peaceful vibe ☁️",
-      "Life in colors 🎨", "Chasing sunsets 🌅", "Urban stories 🏙️",
-      "Hidden gems 💎", "Free spirit 🕊️", "Wanderlust 🌍",
-      "Soft light glow ✨", "Lost in beauty 💫", "Ocean breeze 🌊",
-      "Misty mornings 🌫️", "Starry nights 🌌", "Frozen frame ❄️"
-    ];
-
-    const imgs = document.querySelectorAll(".gallery img");
-    imgs.forEach((img, idx) => {
-      const wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-      const caption = document.createElement("div");
-      caption.className = "caption";
-      caption.textContent = captions[idx % captions.length];
-      wrapper.appendChild(img.cloneNode(true));
-      wrapper.appendChild(caption);
-      img.replaceWith(wrapper);
-
-      let i = idx;
-      setInterval(() => {
-        i++;
-        caption.textContent = captions[i % captions.length];
-      }, 20000);
-
-      wrapper.querySelector("img").addEventListener("click", () => {
-        openFullscreen(img.src);
-      });
-    });
-
-    function openFullscreen(src) {
-      const overlay = document.createElement("div");
-      overlay.className = "fullscreen";
-      const bigImg = document.createElement("img");
-      bigImg.src = src;
-      const download = document.createElement("a");
-      download.href = src;
-      download.download = src.split("/").pop();
-      download.className = "download-btn";
-      download.textContent = "⬇️ Download Image";
-      overlay.appendChild(bigImg);
-      overlay.appendChild(download);
-      document.body.appendChild(overlay);
-      overlay.addEventListener("click", () => overlay.remove());
-    }
-
-    const alertBox = document.createElement("div");
-    alertBox.textContent = "Thank you for visiting my pics!";
-    alertBox.style.position = "fixed";
-    alertBox.style.top = "20px";
-    alertBox.style.left = "50%";
-    alertBox.style.transform = "translateX(-50%)";
-    alertBox.style.backgroundColor = "#333";
-    alertBox.style.color = "white";
-    alertBox.style.padding = "15px 30px";
-    alertBox.style.borderRadius = "8px";
-    alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
-    alertBox.style.fontSize = "18px";
-    alertBox.style.zIndex = "1001";
-    alertBox.style.opacity = "0";
-    alertBox.style.transition = "opacity 0.5s ease";
-    document.body.appendChild(alertBox);
-    setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
-    setTimeout(() => {
-      alertBox.style.opacity = "0";
-      setTimeout(() => alertBox.remove(), 500);
-    }, 2500);
-
-    const footer = document.createElement("div");
-    footer.className = "time-box";
-    function updateClock() {
-      const now = new Date();
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      footer.textContent = "⏰ " + now.toLocaleTimeString() + " — " + days[now.getDay()] + ", " + now.toLocaleDateString();
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    const wrap = document.createElement("div");
-    wrap.style.textAlign = "center";
-    wrap.appendChild(footer);
-    document.body.appendChild(wrap);
-
-    const backBtn = document.getElementById("backBtn");
-    backBtn.addEventListener("click", () => {
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    });
-  });
+const figures=document.querySelectorAll('figure');let currentIndex=0;figures.forEach((fig,idx)=>fig.dataset.index=idx;fig.querySelector('img').addEventListener('click',()=>{currentIndex=idx;openFullscreen(fig.querySelector('img').src,fig.querySelector('figcaption').textContent);}));function openFullscreen(src,captionText){let zoomed=false;
+  const overlay=document.createElement('div');overlay.className='fullscreen';
+  const bigImg=document.createElement('img');bigImg.src=src;
+  const counter=document.createElement('div');counter.style.position='absolute';counter.style.top='20px';counter.style.left='50%';counter.style.transform='translateX(-50%)';counter.style.color='white';counter.style.fontSize='18px';counter.style.padding='8px 16px';counter.style.background='rgba(0,0,0,0.4)';
+  const caption=document.createElement('div');caption.style.color='white';caption.style.fontSize='22px';caption.style.marginTop='10px';
+  const download=document.createElement('a');download.href=src;download.download=src.split('/').pop();download.className='download-btn';download.textContent='⬇️ Download Image';
+  const closeBtn=document.createElement('button');closeBtn.innerHTML='&times;';closeBtn.className='close-btn';
+  overlay.append(counter,bigImg,caption,download,closeBtn);document.body.appendChild(overlay);caption.textContent=captionText;
+  bigImg.addEventListener('click',()=>{zoomed=!zoomed;bigImg.style.transform=zoomed?'scale(2)':'scale(1)';bigImg.style.cursor=zoomed?'zoom-out':'zoom-in';});closeBtn.addEventListener('click',()=>overlay.remove());overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+  function showImageAt(idx){currentIndex=(idx+figures.length)%figures.length;const fig=figures[currentIndex];const img=fig.querySelector('img');bigImg.style.opacity=0;setTimeout(()=>{bigImg.src=img.src;caption.textContent=fig.querySelector('figcaption').textContent;counter.textContent=(currentIndex+1)+' / '+figures.length;bigImg.style.opacity=1;zoomed=false;bigImg.style.transform='scale(1)';bigImg.style.cursor='zoom-in';},300);}
+  counter.textContent=(currentIndex+1)+' / '+figures.length;
+  let touchStartX=0;overlay.addEventListener('touchstart',e=>touchStartX=e.touches[0].clientX);overlay.addEventListener('touchend',e=>{const diff=e.changedTouches[0].clientX-touchStartX;if(diff<-50)showImageAt(currentIndex+1);if(diff>50)showImageAt(currentIndex-1);});
+  document.addEventListener('keydown',keyHandler);function keyHandler(e){if(e.key==='Escape')overlay.remove();if(e.key==='ArrowRight')showImageAt(currentIndex+1);if(e.key==='ArrowLeft')showImageAt(currentIndex-1);}overlay.addEventListener('remove',()=>document.removeEventListener('keydown',keyHandler));
+}
+const progress=document.querySelector('.progress-bar');function updateProgress(){if(audio.duration){progress.style.width=(audio.currentTime/audio.duration)*100+'%';}requestAnimationFrame(updateProgress);}updateProgress();
+document.querySelector('.progress-container').addEventListener('click',e=>{const rect=e.currentTarget.getBoundingClientRect();const pct=(e.clientX-rect.left)/rect.width;audio.currentTime=audio.duration*pct;});
 </script>
 
 </body>
