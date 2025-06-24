@@ -117,17 +117,35 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.4);
       transition: background-color 0.3s ease, transform 0.2s ease;
       z-index: 1001;
-      display: none;
     }
     #backBtn:hover {
       background-color: #444;
       transform: scale(1.1);
     }
-    @media (max-width: 480px) {
-      #backBtn {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
+    .time-box {
+      margin-top: 40px;
+      font-size: 22px;
+      color: #fff;
+      background: linear-gradient(135deg, #222, #444);
+      padding: 15px 30px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      text-align: center;
+      animation: pulseTime 5s infinite ease-in-out;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: transform 0.3s ease;
+    }
+    .time-box:hover {
+      transform: scale(1.03);
+    }
+    @keyframes pulseTime {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
       }
     }
   </style>
@@ -135,7 +153,7 @@
 <body>
 
 <audio id="bgMusic" autoplay loop style="display: none;">
-  <source src="AUD-20250421-WA0004.m4a" type="audio/mp4">
+  <source id="musicSource" src="" type="audio/mp4">
 </audio>
 
 <div id="ageGate">
@@ -147,158 +165,159 @@
 </div>
 
 <div class="gallery" style="display: none;">
-  <!-- Images from 1.jpg to 18.jpg -->
-  <img src="1.jpg" alt="Image 1" loading="lazy">
-  <img src="2.jpg" alt="Image 2" loading="lazy">
-  <img src="3.jpg" alt="Image 3" loading="lazy">
-  <img src="4.jpg" alt="Image 4" loading="lazy">
-  <img src="5.jpg" alt="Image 5" loading="lazy">
-  <img src="6.jpg" alt="Image 6" loading="lazy">
-  <img src="7.jpg" alt="Image 7" loading="lazy">
-  <img src="8.jpg" alt="Image 8" loading="lazy">
-  <img src="9.jpg" alt="Image 9" loading="lazy">
-  <img src="10.jpg" alt="Image 10" loading="lazy">
-  <img src="11.jpg" alt="Image 11" loading="lazy">
-  <img src="12.jpg" alt="Image 12" loading="lazy">
-  <img src="13.jpg" alt="Image 13" loading="lazy">
-  <img src="14.jpg" alt="Image 14" loading="lazy">
-  <img src="15.jpg" alt="Image 15" loading="lazy">
-  <img src="16.jpg" alt="Image 16" loading="lazy">
-  <img src="17.jpg" alt="Image 17" loading="lazy">
-  <img src="18.jpg" alt="Image 18" loading="lazy">
+  <!-- Add your images here -->
+  <img src="1.jpg" alt="Image 1">
+  <img src="2.jpg" alt="Image 2">
+  <!-- ... through to ... -->
+  <img src="18.jpg" alt="Image 18">
 </div>
 
 <button id="backBtn" title="Back">🔙</button>
 
 <script>
-  document.getElementById("yesBtn").onclick = function () {
-    document.getElementById("ageGate").style.display = "none";
-    document.querySelector(".gallery").style.display = "grid";
-    document.getElementById("backBtn").style.display = "block";
+const musicFiles = [
+  "Die With A Smile.m4a",
+  "SHOKA.m4a",
+  "AUD-20250421-WA0004.m4a",
+  "Anxiety.m4a"
+];
 
-    const music = document.getElementById("bgMusic");
-    music.volume = 0;
-    music.play().then(() => {
-      let vol = 0;
-      const fadeIn = setInterval(() => {
-        vol += 0.05;
-        if (vol >= 0.5) {
-          music.volume = 0.5;
-          clearInterval(fadeIn);
-        } else {
-          music.volume = vol;
-        }
-      }, 200);
-    });
-  };
-
-  document.getElementById("noBtn").onclick = function () {
-    alert("You must be 16 or older to access this site.");
-    window.location.href = "https://www.google.com";
-  };
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const captions = [
-      "Captured moment ✨", "Nature's touch 🌿", "Smile snapshot 😊",
-      "Golden hour 🌇", "Adventure time 🧭", "Peaceful vibe ☁️",
-      "Life in colors 🎨", "Chasing sunsets 🌅", "Urban stories 🏙️",
-      "Hidden gems 💎", "Free spirit 🕊️", "Wanderlust 🌍",
-      "Soft light glow ✨", "Lost in beauty 💫", "Ocean breeze 🌊",
-      "Misty mornings 🌫️", "Starry nights 🌌", "Frozen frame ❄️"
-    ];
-
-    const imgs = document.querySelectorAll(".gallery img");
-    imgs.forEach((img, idx) => {
-      const wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-      const caption = document.createElement("div");
-      caption.className = "caption";
-      caption.textContent = captions[idx % captions.length];
-      wrapper.appendChild(img.cloneNode(true));
-      wrapper.appendChild(caption);
-      img.replaceWith(wrapper);
-
-      let i = idx;
-      setInterval(() => {
-        i++;
-        caption.textContent = captions[i % captions.length];
-      }, 20000);
-
-      wrapper.querySelector("img").addEventListener("click", () => {
-        openFullscreen(img.src);
-      });
-    });
-
-    function openFullscreen(src) {
-      const overlay = document.createElement("div");
-      overlay.className = "fullscreen";
-      const bigImg = document.createElement("img");
-      bigImg.src = src;
-      const download = document.createElement("a");
-      download.href = src;
-      download.download = src.split("/").pop();
-      download.className = "download-btn";
-      download.textContent = "⬇️ Download Image";
-      overlay.appendChild(bigImg);
-      overlay.appendChild(download);
-      document.body.appendChild(overlay);
-      overlay.addEventListener("click", () => overlay.remove());
-    }
-
-    const alertBox = document.createElement("div");
-    alertBox.textContent = "Thank you for visiting my pics!";
-    alertBox.style.position = "fixed";
-    alertBox.style.top = "20px";
-    alertBox.style.left = "50%";
-    alertBox.style.transform = "translateX(-50%)";
-    alertBox.style.backgroundColor = "#333";
-    alertBox.style.color = "white";
-    alertBox.style.padding = "15px 30px";
-    alertBox.style.borderRadius = "8px";
-    alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
-    alertBox.style.fontSize = "18px";
-    alertBox.style.zIndex = "1001";
-    alertBox.style.opacity = "0";
-    alertBox.style.transition = "opacity 0.5s ease";
-    document.body.appendChild(alertBox);
-    setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
-    setTimeout(() => {
-      alertBox.style.opacity = "0";
-      setTimeout(() => alertBox.remove(), 500);
-    }, 2500);
-
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const footer = document.createElement("div");
-    function updateClock() {
-      const now = new Date();
-      footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-    footer.style.marginTop = "40px";
-    footer.style.fontSize = "20px";
-    footer.style.color = "#fff";
-    footer.style.background = "rgba(0,0,0,0.6)";
-    footer.style.padding = "10px 20px";
-    footer.style.borderRadius = "10px";
-    footer.style.display = "inline-block";
-    footer.style.boxShadow = "0 0 8px rgba(255,255,255,0.2)";
-    footer.style.textAlign = "center";
-    const wrap = document.createElement("div");
-    wrap.style.textAlign = "center";
-    wrap.appendChild(footer);
-    document.body.appendChild(wrap);
-
-    // ✅ Responsive & functional back button
-    const backBtn = document.getElementById("backBtn");
-    backBtn.addEventListener("click", () => {
-      if (window.history.length > 1) {
-        window.history.back();
+function playRandomMusic() {
+  const randomFile = musicFiles[Math.floor(Math.random() * musicFiles.length)];
+  const music = document.getElementById("bgMusic");
+  const source = document.getElementById("musicSource");
+  source.src = randomFile;
+  music.load();
+  music.volume = 0;
+  music.play().then(() => {
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+      vol += 0.05;
+      if (vol >= 0.5) {
+        music.volume = 0.5;
+        clearInterval(fadeIn);
       } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        music.volume = vol;
       }
-    });
+    }, 200);
   });
+}
+
+document.getElementById("yesBtn").onclick = function () {
+  document.getElementById("ageGate").style.display = "none";
+  document.querySelector(".gallery").style.display = "grid";
+  playRandomMusic();
+};
+
+document.getElementById("noBtn").onclick = function () {
+  alert("You must be 16 or older to access this site.");
+  window.location.href = "https://www.google.com";
+};
+
+document.getElementById("backBtn").addEventListener("click", () => {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
+
+// Auto-reload on inactivity after 2 minutes
+let inactivityTimer;
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(() => {
+    location.reload();
+  }, 2 * 60 * 1000);
+}
+['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+  document.addEventListener(event, resetInactivityTimer);
+});
+resetInactivityTimer();
+
+// Caption and fullscreen logic
+const captions = [
+  "Captured moment ✨", "Nature's touch 🌿", "Smile snapshot 😊",
+  "Golden hour 🌇", "Adventure time 🧭", "Peaceful vibe ☁️",
+  "Life in colors 🎨", "Chasing sunsets 🌅", "Urban stories 🏙️",
+  "Hidden gems 💎", "Free spirit 🕊️", "Wanderlust 🌍",
+  "Soft light glow ✨", "Lost in beauty 💫", "Ocean breeze 🌊",
+  "Misty mornings 🌫️", "Starry nights 🌌", "Frozen frame ❄️"
+];
+
+window.addEventListener("DOMContentLoaded", () => {
+  const imgs = document.querySelectorAll(".gallery img");
+  imgs.forEach((img, idx) => {
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "relative";
+    const caption = document.createElement("div");
+    caption.className = "caption";
+    caption.textContent = captions[idx % captions.length];
+    wrapper.appendChild(img.cloneNode(true));
+    wrapper.appendChild(caption);
+    img.replaceWith(wrapper);
+    let i = idx;
+    setInterval(() => {
+      i++;
+      caption.textContent = captions[i % captions.length];
+    }, 20000);
+    wrapper.querySelector("img").addEventListener("click", () => openFullscreen(img.src));
+  });
+
+  function openFullscreen(src) {
+    const overlay = document.createElement("div");
+    overlay.className = "fullscreen";
+    const bigImg = document.createElement("img");
+    bigImg.src = src;
+    const download = document.createElement("a");
+    download.href = src;
+    download.download = src.split("/").pop();
+    download.className = "download-btn";
+    download.textContent = "⬇️ Download Image";
+    overlay.appendChild(bigImg);
+    overlay.appendChild(download);
+    document.body.appendChild(overlay);
+    overlay.addEventListener("click", () => overlay.remove());
+  }
+
+  // Thank you alert
+  const alertBox = document.createElement("div");
+  alertBox.textContent = "Thank you for visiting my pics!";
+  alertBox.style.position = "fixed";
+  alertBox.style.top = "20px";
+  alertBox.style.left = "50%";
+  alertBox.style.transform = "translateX(-50%)";
+  alertBox.style.backgroundColor = "#333";
+  alertBox.style.color = "white";
+  alertBox.style.padding = "15px 30px";
+  alertBox.style.borderRadius = "8px";
+  alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+  alertBox.style.fontSize = "18px";
+  alertBox.style.zIndex = "1001";
+  alertBox.style.opacity = "0";
+  alertBox.style.transition = "opacity 0.5s ease";
+  document.body.appendChild(alertBox);
+  setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
+  setTimeout(() => {
+    alertBox.style.opacity = "0";
+    setTimeout(() => alertBox.remove(), 500);
+  }, 2500);
+
+  // Live time box
+  const footer = document.createElement("div");
+  footer.className = "time-box";
+  function updateClock() {
+    const now = new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    footer.textContent = "⏰ " + now.toLocaleTimeString() + " — " + days[now.getDay()] + ", " + now.toLocaleDateString();
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+  const wrap = document.createElement("div");
+  wrap.style.textAlign = "center";
+  wrap.appendChild(footer);
+  document.body.appendChild(wrap);
+});
 </script>
 
 </body>
