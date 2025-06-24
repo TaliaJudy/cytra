@@ -12,6 +12,42 @@
       font-family: sans-serif;
     }
 
+    /* AGE GATE STYLES */
+    #ageGate {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      color: white;
+      font-size: 22px;
+    }
+
+    #ageGate button {
+      margin: 15px;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    /* GALLERY & FULLSCREEN STYLES BELOW - YOUR ORIGINAL STYLES */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -109,7 +145,17 @@
 </head>
 <body>
 
-  <div class="gallery">
+  <!-- AGE VERIFICATION OVERLAY -->
+  <div id="ageGate">
+    <h2>Are you 16 years or older?</h2>
+    <div>
+      <button id="yesBtn">✅ Yes, I am</button>
+      <button id="noBtn">❌ No, I'm not</button>
+    </div>
+  </div>
+
+  <!-- IMAGE GALLERY -->
+  <div class="gallery" style="display: none;">
     <img src="1.jpg" alt="Image 1">
     <img src="2.jpg" alt="Image 2">
     <img src="3.jpg" alt="Image 3">
@@ -128,9 +174,22 @@
     <img src="18.jpg" alt="Image 18">
   </div>
 
-  <button id="backBtn" title="Back">🔙</button>
+  <button id="backBtn" title="Back" style="display: none;">🔙</button>
 
   <script>
+    // AGE GATE LOGIC
+    document.getElementById("yesBtn").onclick = function () {
+      document.getElementById("ageGate").style.display = "none";
+      document.querySelector(".gallery").style.display = "grid";
+      document.getElementById("backBtn").style.display = "block";
+    };
+
+    document.getElementById("noBtn").onclick = function () {
+      alert("You must be 16 or older to access this site.");
+      window.location.href = "https://www.google.com";
+    };
+
+    // THE REST OF YOUR SCRIPT BELOW
     document.addEventListener("DOMContentLoaded", () => {
       const captions = [
         "The journey begins 🌄", "Moments captured forever 📸", "A smile in every frame 😊",
@@ -238,6 +297,5 @@
       });
     });
   </script>
-
 </body>
 </html>
