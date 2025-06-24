@@ -24,9 +24,10 @@
       width: 100%;
       height: auto;
       border-radius: 12px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       cursor: pointer;
+      opacity: 1;
     }
 
     .gallery img:hover {
@@ -38,12 +39,13 @@
       font-size: 14px;
       background: rgba(0, 0, 0, 0.6);
       color: white;
-      padding: 8px 12px;
+      padding: 6px 10px;
       position: absolute;
       bottom: 0;
       width: 100%;
       text-align: center;
       border-radius: 0 0 12px 12px;
+      transition: opacity 0.2s ease;
     }
   </style>
 </head>
@@ -72,13 +74,9 @@
     document.addEventListener("DOMContentLoaded", () => {
       const images = document.querySelectorAll("img");
 
-      // Fade-in animation
+      // Instantly show images
       images.forEach(img => {
-        img.style.opacity = 0;
-        img.onload = () => {
-          img.style.transition = "opacity 1s";
-          img.style.opacity = 1;
-        };
+        img.style.opacity = 1;
 
         // Lightbox
         img.addEventListener("click", () => {
@@ -121,14 +119,14 @@
       alertBox.style.fontSize = "18px";
       alertBox.style.zIndex = "1001";
       alertBox.style.opacity = "0";
-      alertBox.style.transition = "opacity 1s ease";
+      alertBox.style.transition = "opacity 0.5s ease";
 
       document.body.appendChild(alertBox);
-      setTimeout(() => { alertBox.style.opacity = "1"; }, 500);
+      setTimeout(() => { alertBox.style.opacity = "1"; }, 200);
       setTimeout(() => {
         alertBox.style.opacity = "0";
-        setTimeout(() => alertBox.remove(), 1000);
-      }, 3500);
+        setTimeout(() => alertBox.remove(), 500);
+      }, 2500);
 
       // Date/time at bottom
       const footer = document.createElement("div");
@@ -151,7 +149,7 @@
       wrapper.appendChild(footer);
       document.body.appendChild(wrapper);
 
-      // Rotating captions
+      // Captions with auto-rotate
       const captions = [
         "The journey begins 🌄",
         "Moments captured forever 📸",
