@@ -12,90 +12,231 @@
       font-family: sans-serif;
     }
 
-    /* Age gate overlay */
-    #ageGate {
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .caption {
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 6px 10px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .fullscreen {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.9);
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.95);
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      z-index: 1000;
       flex-direction: column;
-      color: white;
-      font-size: 20px;
     }
 
-    #ageGate button {
-      margin: 15px;
-      padding: 15px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
+    .fullscreen img {
+      max-width: 90%;
+      max-height: 80%;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+    }
+
+    .download-btn {
+      background-color: #ffffff30;
+      color: white;
+      padding: 18px 36px;
+      font-size: 22px;
+      border: 2px solid white;
+      border-radius: 12px;
       cursor: pointer;
-      transition: background 0.3s;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
     }
 
-    #yesBtn {
-      background-color: #28a745;
+    .download-btn:hover {
+      background-color: #ffffff50;
+      transform: scale(1.05);
+    }
+
+    #backBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #222;
       color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 30px;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 1001;
     }
 
-    #yesBtn:hover {
-      background-color: #218838;
-    }
-
-    #noBtn {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    #noBtn:hover {
-      background-color: #c82333;
+    #backBtn:hover {
+      background-color: #444;
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
 
-  <!-- Age Gate Modal -->
-  <div id="ageGate">
-    <h2>Are you 16 years or older?</h2>
-    <div>
-      <button id="yesBtn">✅ I'm 16+</button>
-      <button id="noBtn">❌ I'm not</button>
-    </div>
-  </div>
-
-  <!-- Everything else stays the same below -->
-
-  <!-- BACK BUTTON -->
-  <button id="backBtn" title="Back">🔙</button>
-
   <div class="gallery">
-    <!-- Your images here -->
     <img src="1.jpg" alt="Image 1">
     <img src="2.jpg" alt="Image 2">
-    <!-- Add the rest of your images as needed -->
+    <img src="3.jpg" alt="Image 3">
+    <img src="4.jpg" alt="Image 4">
+    <img src="5.jpg" alt="Image 5">
+    <img src="7.jpg" alt="Image 7">
+    <img src="9.jpg" alt="Image 9">
+    <img src="10.jpg" alt="Image 10">
+    <img src="11.jpg" alt="Image 11">
+    <img src="12.jpg" alt="Image 12">
+    <img src="13.jpg" alt="Image 13">
+    <img src="14.jpg" alt="Image 14">
+    <img src="15.jpg" alt="Image 15">
+    <img src="16.jpg" alt="Image 16">
+    <img src="17.jpg" alt="Image 17">
+    <img src="18.jpg" alt="Image 18">
   </div>
 
+  <button id="backBtn" title="Back">🔙</button>
+
   <script>
-    // AGE CHECK
-    document.getElementById("yesBtn").onclick = function () {
-      document.getElementById("ageGate").style.display = "none";
-    };
+    document.addEventListener("DOMContentLoaded", () => {
+      const captions = [
+        "The journey begins 🌄", "Moments captured forever 📸", "A smile in every frame 😊",
+        "Beauty in simplicity 🌼", "Wander and wonder 🗺️", "Stillness speaks 🎑",
+        "Unforgettable memories 💫", "Nature's charm 🌿", "Snapshots of joy 🥰",
+        "Timeless treasures ⏳", "Golden days ☀️", "Deep reflections 💭",
+        "Cloud-kissed peaks 🏔️", "Urban tales 🏙️", "Desert dreams 🐪",
+        "Frozen in time ❄️", "Wild and free 🐾", "Soulful sights 🎨"
+      ];
 
-    document.getElementById("noBtn").onclick = function () {
-      alert("Sorry, you must be at least 16 to view this content.");
-      window.location.href = "https://www.google.com";
-    };
+      const imgs = document.querySelectorAll(".gallery img");
+      imgs.forEach((img, idx) => {
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
 
-    // BACK BUTTON
-    document.getElementById("backBtn").addEventListener("click", () => {
-      window.history.back();
+        const caption = document.createElement("div");
+        caption.className = "caption";
+        caption.textContent = captions[idx % captions.length];
+
+        wrapper.appendChild(img.cloneNode(true));
+        wrapper.appendChild(caption);
+        img.replaceWith(wrapper);
+
+        let i = idx;
+        setInterval(() => {
+          i++;
+          caption.textContent = captions[i % captions.length];
+        }, 20000);
+
+        wrapper.querySelector("img").addEventListener("click", () => {
+          openFullscreen(img.src);
+        });
+      });
+
+      function openFullscreen(src) {
+        const overlay = document.createElement("div");
+        overlay.className = "fullscreen";
+
+        const bigImg = document.createElement("img");
+        bigImg.src = src;
+
+        const download = document.createElement("a");
+        download.href = src;
+        download.download = src.split("/").pop();
+        download.className = "download-btn";
+        download.textContent = "⬇️ Download Image";
+
+        overlay.appendChild(bigImg);
+        overlay.appendChild(download);
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", () => overlay.remove());
+        document.addEventListener("keydown", function escClose(e) {
+          if (e.key === "Escape") {
+            overlay.remove();
+            document.removeEventListener("keydown", escClose);
+          }
+        });
+      }
+
+      const alertBox = document.createElement("div");
+      alertBox.textContent = "Thank you for visiting my pics!";
+      alertBox.style.position = "fixed";
+      alertBox.style.top = "20px";
+      alertBox.style.left = "50%";
+      alertBox.style.transform = "translateX(-50%)";
+      alertBox.style.backgroundColor = "#333";
+      alertBox.style.color = "white";
+      alertBox.style.padding = "15px 30px";
+      alertBox.style.borderRadius = "8px";
+      alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+      alertBox.style.fontSize = "18px";
+      alertBox.style.zIndex = "1001";
+      alertBox.style.opacity = "0";
+      alertBox.style.transition = "opacity 0.5s ease";
+
+      document.body.appendChild(alertBox);
+      setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
+      setTimeout(() => {
+        alertBox.style.opacity = "0";
+        setTimeout(() => alertBox.remove(), 500);
+      }, 2500);
+
+      const now = new Date();
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const footer = document.createElement("div");
+      footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
+      footer.style.marginTop = "40px";
+      footer.style.fontSize = "16px";
+      footer.style.color = "#fff";
+      footer.style.background = "rgba(0,0,0,0.6)";
+      footer.style.padding = "10px 20px";
+      footer.style.borderRadius = "10px";
+      footer.style.display = "inline-block";
+      footer.style.boxShadow = "0 0 8px rgba(255,255,255,0.2)";
+      footer.style.textAlign = "center";
+
+      const wrap = document.createElement("div");
+      wrap.style.textAlign = "center";
+      wrap.appendChild(footer);
+      document.body.appendChild(wrap);
+
+      document.getElementById("backBtn").addEventListener("click", () => {
+        window.history.back();
+      });
     });
-
-    // You can insert the rest of your JavaScript from previous examples here.
   </script>
 
 </body>
