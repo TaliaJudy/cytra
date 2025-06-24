@@ -3,196 +3,206 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jack's Gallery ✨</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+<title>Cytra's Ultimate Gallery ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500&display=swap" rel="stylesheet" />
 <style>
-  body {
-    background: radial-gradient(circle at center, #0A3D62, #0A1F2F);
-    font-family: 'Orbitron', sans-serif;
-    color: white;
-    margin: 0;
-    padding: 0;
-    animation: fadeInBody 1s ease forwards;
+  html, body {
+    margin: 0; padding: 0;
+    background: #000; color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
   }
-  @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
+  .loader {
+    position: fixed; top:0; left:0;
+    width:100vw; height:100vh;
+    background:#000; display:flex;
+    align-items:center; justify-content:center;
+    z-index:999; transition: opacity 1s ease;
+  }
+  .loader h1 {
+    font-size:3rem; color:#0ff;
+    animation: glow 2s infinite alternate;
+  }
+  @keyframes glow {
+    0% { text-shadow: 0 0 10px #0ff; }
+    100% { text-shadow: 0 0 40px #0ff; }
+  }
+  .hidden { opacity: 0; pointer-events: none; }
 
-  h1 {
-    text-align: center;
-    padding: 1rem;
-    font-size: 2.2rem;
-    background: linear-gradient(
-      90deg,
-      red, orange, yellow, green, cyan, blue, violet
-    );
-    background-size: 400% 100%;
+  h1.title {
+    text-align: center; padding: 1rem; font-size: 2.5rem;
+    background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet);
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rainbowShift 5s linear infinite;
-    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    animation: rainbow 6s linear infinite;
   }
-  @keyframes rainbowShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+  @keyframes rainbow { to { background-position: 200% 50%; } }
+
+  .theme-toggle {
+    position: fixed; top:1rem; left:1rem;
+    background:rgba(0,0,0,0.5); border:1px solid #0ff;
+    color:#0ff; padding:0.5rem 1rem;
+    border-radius:24px; cursor:pointer;
+    z-index:10;
+  }
+  .theme-toggle:hover { background:#0ff; color:#000; box-shadow:0 0 10px #0ff; }
 
   .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 10px;
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+    gap:1rem; padding:1rem;
+    opacity:0; transform:translateY(20px);
+    animation:fadeUp 1s forwards ease-in-out 1s;
   }
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
   .image-container {
-    opacity: 0;
-    transform: scale(0.95);
-    border-radius: 12px;
-    background: #111;
-    box-shadow: 0 0 10px rgba(0, 100, 255, 0.6), inset 0 0 12px rgba(0, 100, 255, 0.4);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    animation: fadeInScale 0.7s forwards;
-    position: relative;
-  }
-  @keyframes fadeInScale { to { opacity: 1; transform: scale(1); } }
-  .image-container:hover {
-    box-shadow: 0 0 20px rgba(0,180,255,0.9), inset 0 0 20px rgba(0,180,255,0.3);
-    transform: scale(1.03);
+    background:rgba(0,0,0,0.5); border:1px solid #0ff;
+    border-radius:12px; overflow:hidden; position:relative;
+    box-shadow:0 0 16px #0ff; perspective:800px;
   }
   .image-container img {
-    width: 100%;
-    cursor: pointer;
-    display: block;
+    width:100%; transition:transform 0.5s; cursor:pointer;
   }
-  .watermark {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    padding: 2px 4px;
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.6);
-    background: rgba(0,0,0,0.3);
-    border-radius: 2px;
-  }
-  .caption {
-    text-align: center;
-    padding: 4px 0;
-    background: #000;
-    font-size: 0.9rem;
-  }
+  .image-container:hover img { transform: scale(1.1) rotateY(10deg); }
 
-  /* Controls for fullscreen */
+  .tooltip {
+    position:absolute; bottom:4px; left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.7); padding:0.2rem 0.6rem;
+    border-radius:8px; opacity:0;
+    color:#0ff; font-size:0.8rem;
+    transition:opacity 0.3s;
+  }
+  .image-container:hover .tooltip { opacity:1; }
+
+  #top-btn {
+    position:fixed; bottom:1rem; right:1rem;
+    background:#0ff; color:#000; padding:0.5rem 1rem;
+    border:none; border-radius:24px;
+    cursor:pointer; box-shadow:0 0 12px #0ff;
+    opacity:0; transition:opacity 0.3s; z-index:10;
+  }
+  #top-btn.show { opacity:1; }
+  #top-btn:hover { background:#000; color:#0ff; border:1px solid #0ff; }
+
   .fullscreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.9);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    background:rgba(0,0,0,0.95); display:none;
+    align-items:center; justify-content:center; flex-direction:column;
+    z-index:100; padding:1rem;
   }
   .fullscreen img {
-    max-width: 90%;
-    max-height: 80%;
-    border-radius: 8px;
+    max-width:90%; max-height:70%;
+    border-radius:12px; border:2px solid #0ff;
+    box-shadow:0 0 32px #0ff;
   }
-  .close-btn, .download-btn, #slideshow-btn {
-    position: absolute;
-    top: 20px;
-    background: linear-gradient(135deg, #0A3D62, #1B4F72);
-    color: #fff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 24px;
-    cursor: pointer;
-    font-size: 1rem;
-    box-shadow: 0 0 8px rgba(10,61,98,0.7);
-    transition: all 0.3s ease;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
+  .close-btn, .download-btn, .prev-btn, .next-btn, #slideshow-btn {
+    position:absolute; background:#000; border:1px solid #0ff;
+    color:#0ff; padding:0.5rem 1rem; border-radius:24px;
+    cursor:pointer; box-shadow:0 0 12px #0ff; transition:0.3s;
   }
-  .close-btn { right: 20px; }
-  .download-btn { right: 120px; }
-  #slideshow-btn { right: 240px; }
-  .close-btn:hover, .download-btn:hover, #slideshow-btn:hover {
-    background: linear-gradient(135deg, #1B4F72, #0A3D62);
-    transform: scale(1.08);
-    box-shadow: 0 0 14px rgba(10,61,98,0.9);
+  .close-btn { top:1rem; right:1rem; }
+  .download-btn { top:1rem; right:7rem; }
+  #slideshow-btn { top:1rem; right:14rem; }
+  .prev-btn { left:1rem; top:50%; transform:translateY(-50%); }
+  .next-btn { right:1rem; top:50%; transform:translateY(-50%); }
+  .close-btn:hover, .download-btn:hover, .prev-btn:hover, .next-btn:hover, #slideshow-btn:hover {
+    background:#0ff; color:#000;
   }
 </style>
 </head>
 <body>
-<h1>Jack's Gallery ✨</h1>
 
-<!-- Slideshow button -->
-<button id="slideshow-btn">Start Slideshow</button>
+<div class="loader" id="loader"><h1>Cytra's Ultimate Gallery ✨</h1></div>
+<button class="theme-toggle" id="themeToggle">Light Mode</button>
+<h1 class="title">Cytra's Ultimate Gallery ✨</h1>
 
-<!-- Gallery grid -->
-<div class="gallery">
-  <!-- 18 images manually listed -->
-  <div class="image-container"><img src="1.jpg" alt="Pic 1"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 1</div></div>
-  <div class="image-container"><img src="2.jpg" alt="Pic 2"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 2</div></div>
-  <div class="image-container"><img src="3.jpg" alt="Pic 3"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 3</div></div>
-  <div class="image-container"><img src="4.jpg" alt="Pic 4"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 4</div></div>
-  <div class="image-container"><img src="5.jpg" alt="Pic 5"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 5</div></div>
-  <div class="image-container"><img src="6.jpg" alt="Pic 6"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 6</div></div>
-  <div class="image-container"><img src="7.jpg" alt="Pic 7"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 7</div></div>
-  <div class="image-container"><img src="8.jpg" alt="Pic 8"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 8</div></div>
-  <div class="image-container"><img src="9.jpg" alt="Pic 9"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 9</div></div>
-  <div class="image-container"><img src="10.jpg" alt="Pic 10"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 10</div></div>
-  <div class="image-container"><img src="11.jpg" alt="Pic 11"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 11</div></div>
-  <div class="image-container"><img src="12.jpg" alt="Pic 12"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 12</div></div>
-  <div class="image-container"><img src="13.jpg" alt="Pic 13"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 13</div></div>
-  <div class="image-container"><img src="14.jpg" alt="Pic 14"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 14</div></div>
-  <div class="image-container"><img src="15.jpg" alt="Pic 15"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 15</div></div>
-  <div class="image-container"><img src="16.jpg" alt="Pic 16"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 16</div></div>
-  <div class="image-container"><img src="17.jpg" alt="Pic 17"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 17</div></div>
-  <div class="image-container"><img src="18.jpg" alt="Pic 18"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 18</div></div>
+<div class="gallery" id="gallery">
+  <div class="image-container"><img src="1.jpg" alt="Pic 1"><div class="tooltip">Pic 1</div></div>
+  <div class="image-container"><img src="2.jpg" alt="Pic 2"><div class="tooltip">Pic 2</div></div>
+  <div class="image-container"><img src="3.jpg" alt="Pic 3"><div class="tooltip">Pic 3</div></div>
+  <div class="image-container"><img src="4.jpg" alt="Pic 4"><div class="tooltip">Pic 4</div></div>
+  <div class="image-container"><img src="5.jpg" alt="Pic 5"><div class="tooltip">Pic 5</div></div>
+  <div class="image-container"><img src="6.jpg" alt="Pic 6"><div class="tooltip">Pic 6</div></div>
+  <div class="image-container"><img src="7.jpg" alt="Pic 7"><div class="tooltip">Pic 7</div></div>
+  <div class="image-container"><img src="8.jpg" alt="Pic 8"><div class="tooltip">Pic 8</div></div>
+  <div class="image-container"><img src="9.jpg" alt="Pic 9"><div class="tooltip">Pic 9</div></div>
+  <div class="image-container"><img src="10.jpg" alt="Pic 10"><div class="tooltip">Pic 10</div></div>
+  <div class="image-container"><img src="11.jpg" alt="Pic 11"><div class="tooltip">Pic 11</div></div>
+  <div class="image-container"><img src="12.jpg" alt="Pic 12"><div class="tooltip">Pic 12</div></div>
+  <div class="image-container"><img src="13.jpg" alt="Pic 13"><div class="tooltip">Pic 13</div></div>
+  <div class="image-container"><img src="14.jpg" alt="Pic 14"><div class="tooltip">Pic 14</div></div>
+  <div class="image-container"><img src="15.jpg" alt="Pic 15"><div class="tooltip">Pic 15</div></div>
+  <div class="image-container"><img src="16.jpg" alt="Pic 16"><div class="tooltip">Pic 16</div></div>
+  <div class="image-container"><img src="17.jpg" alt="Pic 17"><div class="tooltip">Pic 17</div></div>
+  <div class="image-container"><img src="18.jpg" alt="Pic 18"><div class="tooltip">Pic 18</div></div>
 </div>
 
-<!-- Modal -->
 <div class="fullscreen" id="fullscreen">
-  <button class="close-btn">X</button>
+  <button class="close-btn">Close</button>
   <button class="download-btn">Download</button>
+  <button id="slideshow-btn">Slideshow</button>
+  <button class="prev-btn">&#9664;</button>
+  <button class="next-btn">&#9654;</button>
   <img id="fullscreen-img" src="" alt="">
 </div>
 
-<script>
-  const fullscreen = document.getElementById('fullscreen')
-  const fullscreenImg = document.getElementById('fullscreen-img')
-  const closeBtn = fullscreen.querySelector('.close-btn')
-  const downloadBtn = fullscreen.querySelector('.download-btn')
-  const slideshowBtn = document.getElementById('slideshow-btn')
-  let index = 0
-  let images = Array.from(document.querySelectorAll('.image-container img'))
-  let slideshowInterval
+<button id="top-btn">Top</button>
 
-  images.forEach((img, i) => {
-    img.addEventListener('click', () => {
-      index = i
-      fullscreenImg.src = img.src
-      fullscreen.style.display = 'flex'
-    })
-  })
-  closeBtn.onclick = () => fullscreen.style.display = 'none'
+<script>
+  window.onload = () => loader.classList.add('hidden');
+  const loader = document.getElementById('loader');
+  const topBtn = document.getElementById('top-btn');
+  const themeToggle = document.getElementById('themeToggle');
+  const fullscreen = document.getElementById('fullscreen');
+  const fullscreenImg = document.getElementById('fullscreen-img');
+  const closeBtn = document.querySelector('.close-btn');
+  const downloadBtn = document.querySelector('.download-btn');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  const slideshowBtn = document.getElementById('slideshow-btn');
+
+  const images = Array.from(document.querySelectorAll('.image-container img'));
+  let currentIndex = 0;
+  let slideshowInterval = null;
+
+  images.forEach((img, i) => img.onclick = () => {
+    currentIndex = i;
+    fullscreenImg.src = img.src;
+    fullscreen.style.display = 'flex';
+  });
+
+  closeBtn.onclick = () => fullscreen.style.display = 'none';
   downloadBtn.onclick = () => {
-    const link = document.createElement('a')
-    link.href = fullscreenImg.src
-    link.download = fullscreenImg.src
-    link.click()
-  }
+    const link = document.createElement('a');
+    link.href = fullscreenImg.src;
+    link.download = fullscreenImg.src;
+    link.click();
+  };
+  prevBtn.onclick = () => showIndex((currentIndex-1+images.length)%images.length);
+  nextBtn.onclick = () => showIndex((currentIndex+1)%images.length);
+  function showIndex(idx) { currentIndex = idx; fullscreenImg.src = images[idx].src; }
 
   slideshowBtn.onclick = () => {
     if (slideshowInterval) {
-      clearInterval(slideshowInterval)
-      slideshowInterval = null
-      slideshowBtn.textContent = 'Start Slideshow'
+      clearInterval(slideshowInterval); slideshowInterval = null;
     } else {
-      slideshowBtn.textContent = 'Stop Slideshow'
-      fullscreen.style.display = 'flex'
-      slideshowInterval = setInterval(() => {
-        index = (index + 1) % images.length
-        fullscreenImg.src = images[index].src
-      }, 2000)
+      slideshowInterval = setInterval(() => nextBtn.onclick(), 2000);
     }
-  }
+  };
+  window.onscroll = () => topBtn.classList.toggle('show', window.scrollY>200);
+  topBtn.onclick = () => window.scrollTo({top:0,behavior:'smooth'});
+
+  themeToggle.onclick = () => {
+    if (document.body.style.background==='#fff') {
+      document.body.style.background='#000'; document.body.style.color='#fff'; themeToggle.textContent='Light Mode';
+    } else {
+      document.body.style.background='#fff'; document.body.style.color='#000'; themeToggle.textContent='Dark Mode';
+    }
+  };
 </script>
+
 </body>
 </html>
