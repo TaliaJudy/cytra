@@ -24,10 +24,9 @@
       width: 100%;
       height: auto;
       border-radius: 12px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s ease;
       cursor: pointer;
-      opacity: 1;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
 
     .gallery img:hover {
@@ -45,12 +44,72 @@
       width: 100%;
       text-align: center;
       border-radius: 0 0 12px 12px;
-      transition: opacity 0.2s ease;
+    }
+
+    .fullscreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      flex-direction: column;
+    }
+
+    .fullscreen img {
+      max-width: 90%;
+      max-height: 80%;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+    }
+
+    .download-btn {
+      background-color: #ffffff20;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: 1px solid white;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .download-btn:hover {
+      background-color: #ffffff40;
+    }
+
+    /* Back button floating bottom left */
+    #backBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 22px;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 1001;
+    }
+
+    #backBtn:hover {
+      background-color: #444;
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
 
+  <!-- Image gallery -->
   <div class="gallery">
     <img src="1.jpg" alt="Image 1">
     <img src="2.jpg" alt="Image 2">
@@ -70,39 +129,69 @@
     <img src="18.jpg" alt="Image 18">
   </div>
 
+  <!-- Back button -->
+  <button id="backBtn" title="Back">🔙</button>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const images = document.querySelectorAll("img");
+      const captions = [
+        "The journey begins 🌄", "Moments captured forever 📸", "A smile in every frame 😊",
+        "Beauty in simplicity 🌼", "Wander and wonder 🗺️", "Stillness speaks 🎑",
+        "Unforgettable memories 💫", "Nature's charm 🌿", "Snapshots of joy 🥰",
+        "Timeless treasures ⏳", "Golden days ☀️", "Deep reflections 💭",
+        "Cloud-kissed peaks 🏔️", "Urban tales 🏙️", "Desert dreams 🐪",
+        "Frozen in time ❄️", "Wild and free 🐾", "Soulful sights 🎨"
+      ];
 
-      // Instantly show images
-      images.forEach(img => {
-        img.style.opacity = 1;
+      const imgs = document.querySelectorAll(".gallery img");
+      imgs.forEach((img, idx) => {
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
 
-        // Lightbox
-        img.addEventListener("click", () => {
-          const overlay = document.createElement("div");
-          overlay.style.position = "fixed";
-          overlay.style.top = 0;
-          overlay.style.left = 0;
-          overlay.style.width = "100%";
-          overlay.style.height = "100%";
-          overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-          overlay.style.display = "flex";
-          overlay.style.alignItems = "center";
-          overlay.style.justifyContent = "center";
-          overlay.style.zIndex = 1000;
+        const caption = document.createElement("div");
+        caption.className = "caption";
+        caption.textContent = captions[idx % captions.length];
 
-          const enlarged = document.createElement("img");
-          enlarged.src = img.src;
-          enlarged.style.maxWidth = "90%";
-          enlarged.style.maxHeight = "90%";
-          enlarged.style.boxShadow = "0 0 20px white";
+        wrapper.appendChild(img.cloneNode(true));
+        wrapper.appendChild(caption);
+        img.replaceWith(wrapper);
 
-          overlay.appendChild(enlarged);
-          document.body.appendChild(overlay);
-          overlay.addEventListener("click", () => document.body.removeChild(overlay));
+        let i = idx;
+        setInterval(() => {
+          i++;
+          caption.textContent = captions[i % captions.length];
+        }, 20000);
+
+        wrapper.querySelector("img").addEventListener("click", () => {
+          openFullscreen(img.src);
         });
       });
+
+      function openFullscreen(src) {
+        const overlay = document.createElement("div");
+        overlay.className = "fullscreen";
+
+        const bigImg = document.createElement("img");
+        bigImg.src = src;
+
+        const download = document.createElement("a");
+        download.href = src;
+        download.download = src.split("/").pop();
+        download.className = "download-btn";
+        download.textContent = "⬇️ Download";
+
+        overlay.appendChild(bigImg);
+        overlay.appendChild(download);
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", () => overlay.remove());
+        document.addEventListener("keydown", function escClose(e) {
+          if (e.key === "Escape") {
+            overlay.remove();
+            document.removeEventListener("keydown", escClose);
+          }
+        });
+      }
 
       // Welcome alert
       const alertBox = document.createElement("div");
@@ -122,18 +211,17 @@
       alertBox.style.transition = "opacity 0.5s ease";
 
       document.body.appendChild(alertBox);
-      setTimeout(() => { alertBox.style.opacity = "1"; }, 200);
+      setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
       setTimeout(() => {
         alertBox.style.opacity = "0";
         setTimeout(() => alertBox.remove(), 500);
       }, 2500);
 
-      // Date/time at bottom
-      const footer = document.createElement("div");
+      // Date/time
       const now = new Date();
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const formatted = now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
-      footer.textContent = "Current time: " + formatted;
+      const footer = document.createElement("div");
+      footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
       footer.style.marginTop = "40px";
       footer.style.fontSize = "16px";
       footer.style.color = "#fff";
@@ -144,46 +232,17 @@
       footer.style.boxShadow = "0 0 8px rgba(255,255,255,0.2)";
       footer.style.textAlign = "center";
 
-      const wrapper = document.createElement("div");
-      wrapper.style.textAlign = "center";
-      wrapper.appendChild(footer);
-      document.body.appendChild(wrapper);
+      const wrap = document.createElement("div");
+      wrap.style.textAlign = "center";
+      wrap.appendChild(footer);
+      document.body.appendChild(wrap);
 
-      // Captions with auto-rotate
-      const captions = [
-        "The journey begins 🌄",
-        "Moments captured forever 📸",
-        "A smile in every frame 😊",
-        "Beauty in simplicity 🌼",
-        "Wander and wonder 🗺️",
-        "Stillness speaks 🎑",
-        "Unforgettable memories 💫",
-        "Nature's charm 🌿",
-        "Snapshots of joy 🥰",
-        "Timeless treasures ⏳"
-      ];
-
-      const imgs = document.querySelectorAll(".gallery img");
-      imgs.forEach((img, idx) => {
-        const wrapper = document.createElement("div");
-        wrapper.style.position = "relative";
-        wrapper.style.overflow = "hidden";
-
-        const caption = document.createElement("div");
-        caption.className = "caption";
-        caption.textContent = captions[idx % captions.length];
-        wrapper.appendChild(img.cloneNode(true));
-        wrapper.appendChild(caption);
-
-        img.replaceWith(wrapper);
-
-        let i = idx;
-        setInterval(() => {
-          i++;
-          caption.textContent = captions[i % captions.length];
-        }, 20000);
+      // Back button click
+      document.getElementById("backBtn").addEventListener("click", () => {
+        window.history.back(); // Or: location.href = 'your-home.html';
       });
     });
   </script>
+
 </body>
 </html>
