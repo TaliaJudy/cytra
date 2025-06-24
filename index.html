@@ -1,12 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Cytra's Photos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Cytra's Photos
+  </title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <style>
-    :root {
+   :root {
       --bg: #fff;
       --text: #000;
     }
@@ -100,44 +101,62 @@
       margin-top: 20px;
     }
   </style>
-</head>
-<body class="hidden">
-
-<div id="age-modal">
-  <h2>This site is for users 16 years and older</h2>
-  <button onclick="acceptAge()">I am 16 or older</button>
-</div>
-
-<div class="info-bar">
-  <span id="date-time"></span> |
+ </head>
+ <body class="hidden">
+  <div id="age-modal">
+   <h2>
+    This site is for users 16 years and older
+   </h2>
+   <button onclick="acceptAge()">
+    I am 16 or older
+   </button>
+  </div>
+  <div class="info-bar">
+   <span id="date-time">
+   </span>
+   |
   Theme:
-  <select id="theme-select" onchange="changeTheme()">
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-    <option value="yellow">Yellow</option>
-    <option value="blue">Blue</option>
-  </select>
-</div>
-
-<div class="image-container">
-  <img id="main-image" src="1.jpg" alt="Photo">
-  <div class="caption-overlay" id="caption">Welcome to Cytra's Gallery!</div>
-</div>
-
-<div class="buttons">
-  <button onclick="prevImage()">⬅️ Prev</button>
-  <button onclick="nextImage()">Next ➡️</button>
-</div>
-
-<div class="thumbnails" id="thumbnails"></div>
-
-<div class="reactions" onclick="addReaction(this)">👍 ❤️ 😂 😮 😢 👎</div>
-<a class="download-btn" id="download" href="1.jpg" download>🗿</a>
-
-<audio id="background-audio" autoplay loop hidden>
-  <source id="audio-source" src="phonk1.mp3" type="audio/mpeg">
-</audio>
-
-<script src="index.js"></script>
-</body>
+   <select id="theme-select" onchange="changeTheme()">
+    <option value="light">
+     Light
+    </option>
+    <option value="dark">
+     Dark
+    </option>
+    <option value="yellow">
+     Yellow
+    </option>
+    <option value="blue">
+     Blue
+    </option>
+   </select>
+  </div>
+  <div class="image-container">
+   <img alt="Photo" id="main-image" src="1.jpg"/>
+   <div class="caption-overlay" id="caption">
+    Welcome to Cytra's Gallery!
+   </div>
+  </div>
+  <div class="buttons">
+   <button onclick="prevImage()">
+    ⬅️ Prev
+   </button>
+   <button onclick="nextImage()">
+    Next ➡️
+   </button>
+  </div>
+  <div class="thumbnails" id="thumbnails">
+  </div>
+  <div class="reactions" onclick="addReaction(this)">
+   👍 ❤️ 😂 😮 😢 👎
+  </div>
+  <a class="download-btn" download="" href="1.jpg" id="download">
+   🗿
+  </a>
+  <audio autoplay="" hidden="" id="background-audio" loop="">
+   <source id="audio-source" src="phonk1.mp3" type="audio/mpeg"/>
+  </audio>
+  <script src="index.js">
+  </script>
+ </body>
 </html>
