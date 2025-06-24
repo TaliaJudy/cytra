@@ -1,5 +1,48 @@
-  body {
-  background-image: url('https://files.catbox.moe/oovotp.jpg');
+body {
+  background-image: url('https://files.catbox.moe/fmd1z6.jpg');
+  
+}
+
+
+body {
+  text-align: center;
+  padding: 20px;
   background-size: cover;
-  background-repeat: no-repeat;
-  }
+  font-family: sans-serif;
+}
+
+img {
+  margin: 10px;
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
