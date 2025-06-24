@@ -43,7 +43,7 @@
     background: rgba(0,0,0,0.7);
     text-align: center;
     font-size: 0.9rem;
-    pointer-events: none; /* allow clicking image through caption */
+    pointer-events: none;
   }
   .fullscreen {
     position: fixed;
@@ -84,50 +84,39 @@
 <audio id="bg-music" autoplay muted></audio>
 <script>
   const audio = document.getElementById('bg-music')
-  const tracks = [
-    'track1.mp3',
-    'track2.mp3',
-    'track3.mp3',
-    'track4.mp3'
-  ]
+  const tracks = ['track1.mp3','track2.mp3','track3.mp3','track4.mp3']
   function playRandomTrack() {
     audio.src = tracks[Math.floor(Math.random() * tracks.length)]
     audio.play().catch(() => console.warn('User gesture required to play audio'))
   }
   playRandomTrack()
-
-  // Allow unmute on first click
   document.body.addEventListener('click', () => {
     audio.muted = false
     audio.play().catch(() => {})
   }, { once: true })
-  // Play new random track on end
   audio.addEventListener('ended', playRandomTrack)
 </script>
 
 <div class="gallery">
-  <!-- Repeat this block for all your images -->
-  <div class="image-container">
-    <img src="image1.jpg" alt="Pic 1">
-    <div class="caption">Pic 1</div>
-  </div>
-  <div class="image-container">
-    <img src="image2.jpg" alt="Pic 2">
-    <div class="caption">Pic 2</div>
-  </div>
-  <div class="image-container">
-    <img src="image3.jpg" alt="Pic 3">
-    <div class="caption">Pic 3</div>
-  </div>
-  <div class="image-container">
-    <img src="image4.jpg" alt="Pic 4">
-    <div class="caption">Pic 4</div>
-  </div>
-  <div class="image-container">
-    <img src="image5.jpg" alt="Pic 5">
-    <div class="caption">Pic 5</div>
-  </div>
-  <!-- Add as many as you want here -->
+  <!-- Images 1-18 -->
+  <div class="image-container"><img src="1.jpg" alt="Pic 1"><div class="caption">Pic 1</div></div>
+  <div class="image-container"><img src="2.jpg" alt="Pic 2"><div class="caption">Pic 2</div></div>
+  <div class="image-container"><img src="3.jpg" alt="Pic 3"><div class="caption">Pic 3</div></div>
+  <div class="image-container"><img src="4.jpg" alt="Pic 4"><div class="caption">Pic 4</div></div>
+  <div class="image-container"><img src="5.jpg" alt="Pic 5"><div class="caption">Pic 5</div></div>
+  <div class="image-container"><img src="6.jpg" alt="Pic 6"><div class="caption">Pic 6</div></div>
+  <div class="image-container"><img src="7.jpg" alt="Pic 7"><div class="caption">Pic 7</div></div>
+  <div class="image-container"><img src="8.jpg" alt="Pic 8"><div class="caption">Pic 8</div></div>
+  <div class="image-container"><img src="9.jpg" alt="Pic 9"><div class="caption">Pic 9</div></div>
+  <div class="image-container"><img src="10.jpg" alt="Pic 10"><div class="caption">Pic 10</div></div>
+  <div class="image-container"><img src="11.jpg" alt="Pic 11"><div class="caption">Pic 11</div></div>
+  <div class="image-container"><img src="12.jpg" alt="Pic 12"><div class="caption">Pic 12</div></div>
+  <div class="image-container"><img src="13.jpg" alt="Pic 13"><div class="caption">Pic 13</div></div>
+  <div class="image-container"><img src="14.jpg" alt="Pic 14"><div class="caption">Pic 14</div></div>
+  <div class="image-container"><img src="15.jpg" alt="Pic 15"><div class="caption">Pic 15</div></div>
+  <div class="image-container"><img src="16.jpg" alt="Pic 16"><div class="caption">Pic 16</div></div>
+  <div class="image-container"><img src="17.jpg" alt="Pic 17"><div class="caption">Pic 17</div></div>
+  <div class="image-container"><img src="18.jpg" alt="Pic 18"><div class="caption">Pic 18</div></div>
 </div>
 
 <!-- Fullscreen -->
