@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jack's Pics</title>
   <style>
     body {
@@ -10,14 +11,14 @@
       background-image: url('https://files.catbox.moe/fmd1z6.jpg');
       background-size: cover;
       font-family: sans-serif;
+      font-size: 20px;
+      line-height: 1.6;
       overflow-x: hidden;
     }
-
     #ageGate {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       background-color: rgba(0,0,0,0.95);
       display: flex;
       justify-content: center;
@@ -27,7 +28,6 @@
       color: white;
       font-size: 22px;
     }
-
     #ageGate button {
       margin: 15px;
       padding: 12px 24px;
@@ -36,18 +36,16 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     #yesBtn { background-color: #28a745; color: white; }
     #noBtn { background-color: #dc3545; color: white; }
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
-
     .gallery img {
       width: 100%;
       height: auto;
@@ -56,14 +54,12 @@
       cursor: pointer;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
-
     .gallery img:hover {
       transform: scale(1.05);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
     }
-
     .caption {
-      font-size: 14px;
+      font-size: 18px;
       background: rgba(0, 0, 0, 0.6);
       color: white;
       padding: 6px 10px;
@@ -73,12 +69,10 @@
       text-align: center;
       border-radius: 0 0 12px 12px;
     }
-
     .fullscreen {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       background-color: rgba(0, 0, 0, 0.95);
       display: flex;
       align-items: center;
@@ -86,7 +80,6 @@
       z-index: 1000;
       flex-direction: column;
     }
-
     .fullscreen img {
       max-width: 90%;
       max-height: 80%;
@@ -94,24 +87,21 @@
       border-radius: 12px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
     }
-
     .download-btn {
       background-color: #ffffff30;
       color: white;
-      padding: 18px 36px;
-      font-size: 22px;
+      padding: 20px 40px;
+      font-size: 26px;
       border: 2px solid white;
       border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
       transition: background 0.3s, transform 0.2s;
     }
-
     .download-btn:hover {
       background-color: #ffffff50;
       transform: scale(1.05);
     }
-
     #backBtn {
       position: fixed;
       bottom: 20px;
@@ -120,197 +110,172 @@
       color: white;
       border: none;
       border-radius: 50%;
-      font-size: 30px;
-      width: 70px;
-      height: 70px;
+      font-size: 36px;
+      width: 80px;
+      height: 80px;
       cursor: pointer;
       box-shadow: 0 6px 15px rgba(0,0,0,0.4);
       transition: background-color 0.3s ease, transform 0.2s ease;
       z-index: 1001;
       display: none;
     }
-
     #backBtn:hover {
       background-color: #444;
       transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      body { font-size: 18px; }
+      .download-btn { font-size: 20px; padding: 16px 32px; }
+      #backBtn { font-size: 28px; width: 60px; height: 60px; }
+      .caption { font-size: 16px; }
+    }
+    @media (max-width: 480px) {
+      body { font-size: 16px; }
+      .gallery { gap: 12px; }
+      .caption { font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hidden Audio Player -->
-  <audio id="bgMusic" autoplay loop style="display: none;">
-    <source src="your-music-file.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+<audio id="bgMusic" autoplay loop style="display: none;">
+  <source src="your-music-file.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- Age Verification Modal -->
-  <div id="ageGate">
-    <h2>Are you 16 years or older?</h2>
-    <div>
-      <button id="yesBtn">✅ Yes, I am</button>
-      <button id="noBtn">❌ No, I'm not</button>
-    </div>
+<div id="ageGate">
+  <h2>Are you 16 years or older?</h2>
+  <div>
+    <button id="yesBtn">✅ Yes, I am</button>
+    <button id="noBtn">❌ No, I'm not</button>
   </div>
+</div>
 
-  <!-- Image Gallery -->
-  <div class="gallery" style="display: none;">
-    <img src="1.jpg" alt="Image 1">
-    <img src="2.jpg" alt="Image 2">
-    <img src="3.jpg" alt="Image 3">
-    <img src="4.jpg" alt="Image 4">
-    <img src="5.jpg" alt="Image 5">
-    <img src="7.jpg" alt="Image 7">
-    <img src="9.jpg" alt="Image 9">
-    <img src="10.jpg" alt="Image 10">
-    <img src="11.jpg" alt="Image 11">
-    <img src="12.jpg" alt="Image 12">
-    <img src="13.jpg" alt="Image 13">
-    <img src="14.jpg" alt="Image 14">
-    <img src="15.jpg" alt="Image 15">
-    <img src="16.jpg" alt="Image 16">
-    <img src="17.jpg" alt="Image 17">
-    <img src="18.jpg" alt="Image 18">
-  </div>
+<div class="gallery" style="display: none;">
+  <img src="1.jpg" loading="lazy" alt="Image 1">
+  <img src="2.jpg" loading="lazy" alt="Image 2">
+  <img src="3.jpg" loading="lazy" alt="Image 3">
+  <!-- Add more images here -->
+</div>
 
-  <button id="backBtn" title="Back">🔙</button>
+<button id="backBtn" title="Back">🔙</button>
 
-  <script>
-    document.getElementById("yesBtn").onclick = function () {
-      document.getElementById("ageGate").style.display = "none";
-      document.querySelector(".gallery").style.display = "grid";
-      document.getElementById("backBtn").style.display = "block";
+<script>
+  document.getElementById("yesBtn").onclick = function () {
+    document.getElementById("ageGate").style.display = "none";
+    document.querySelector(".gallery").style.display = "grid";
+    document.getElementById("backBtn").style.display = "block";
 
-      // Fade-in background music
-      const music = document.getElementById("bgMusic");
-      music.volume = 0;
-      music.play().then(() => {
-        let vol = 0;
-        const fadeIn = setInterval(() => {
-          vol += 0.05;
-          if (vol >= 0.5) {
-            music.volume = 0.5;
-            clearInterval(fadeIn);
-          } else {
-            music.volume = vol;
-          }
-        }, 200);
-      }).catch(() => {
-        console.warn("Autoplay blocked — will start after interaction.");
-      });
-    };
+    const music = document.getElementById("bgMusic");
+    music.volume = 0;
+    music.play().then(() => {
+      let vol = 0;
+      const fadeIn = setInterval(() => {
+        vol += 0.05;
+        if (vol >= 0.5) {
+          music.volume = 0.5;
+          clearInterval(fadeIn);
+        } else {
+          music.volume = vol;
+        }
+      }, 200);
+    });
+  };
 
-    document.getElementById("noBtn").onclick = function () {
-      alert("You must be 16 or older to access this site.");
-      window.location.href = "https://www.google.com";
-    };
+  document.getElementById("noBtn").onclick = function () {
+    alert("You must be 16 or older to access this site.");
+    window.location.href = "https://www.google.com";
+  };
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const captions = [
-        "The journey begins 🌄", "Moments captured forever 📸", "A smile in every frame 😊",
-        "Beauty in simplicity 🌼", "Wander and wonder 🗺️", "Stillness speaks 🎑",
-        "Unforgettable memories 💫", "Nature's charm 🌿", "Snapshots of joy 🥰",
-        "Timeless treasures ⏳", "Golden days ☀️", "Deep reflections 💭",
-        "Cloud-kissed peaks 🏔️", "Urban tales 🏙️", "Desert dreams 🐪",
-        "Frozen in time ❄️", "Wild and free 🐾", "Soulful sights 🎨"
-      ];
+  document.addEventListener("DOMContentLoaded", () => {
+    const captions = [
+      "Captured moment ✨", "Nature's touch 🌿", "Smile snapshot 😊",
+      "Golden hour 🌇", "Adventure time 🧭", "Peaceful vibe ☁️"
+    ];
+    const imgs = document.querySelectorAll(".gallery img");
 
-      const imgs = document.querySelectorAll(".gallery img");
-      imgs.forEach((img, idx) => {
-        const wrapper = document.createElement("div");
-        wrapper.style.position = "relative";
+    imgs.forEach((img, idx) => {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+      const caption = document.createElement("div");
+      caption.className = "caption";
+      caption.textContent = captions[idx % captions.length];
+      wrapper.appendChild(img.cloneNode(true));
+      wrapper.appendChild(caption);
+      img.replaceWith(wrapper);
 
-        const caption = document.createElement("div");
-        caption.className = "caption";
-        caption.textContent = captions[idx % captions.length];
+      let i = idx;
+      setInterval(() => {
+        i++;
+        caption.textContent = captions[i % captions.length];
+      }, 20000);
 
-        wrapper.appendChild(img.cloneNode(true));
-        wrapper.appendChild(caption);
-        img.replaceWith(wrapper);
-
-        let i = idx;
-        setInterval(() => {
-          i++;
-          caption.textContent = captions[i % captions.length];
-        }, 20000);
-
-        wrapper.querySelector("img").addEventListener("click", () => {
-          openFullscreen(img.src);
-        });
-      });
-
-      function openFullscreen(src) {
-        const overlay = document.createElement("div");
-        overlay.className = "fullscreen";
-
-        const bigImg = document.createElement("img");
-        bigImg.src = src;
-
-        const download = document.createElement("a");
-        download.href = src;
-        download.download = src.split("/").pop();
-        download.className = "download-btn";
-        download.textContent = "⬇️ Download Image";
-
-        overlay.appendChild(bigImg);
-        overlay.appendChild(download);
-        document.body.appendChild(overlay);
-
-        overlay.addEventListener("click", () => overlay.remove());
-        document.addEventListener("keydown", function escClose(e) {
-          if (e.key === "Escape") {
-            overlay.remove();
-            document.removeEventListener("keydown", escClose);
-          }
-        });
-      }
-
-      const alertBox = document.createElement("div");
-      alertBox.textContent = "Thank you for visiting my pics!";
-      alertBox.style.position = "fixed";
-      alertBox.style.top = "20px";
-      alertBox.style.left = "50%";
-      alertBox.style.transform = "translateX(-50%)";
-      alertBox.style.backgroundColor = "#333";
-      alertBox.style.color = "white";
-      alertBox.style.padding = "15px 30px";
-      alertBox.style.borderRadius = "8px";
-      alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
-      alertBox.style.fontSize = "18px";
-      alertBox.style.zIndex = "1001";
-      alertBox.style.opacity = "0";
-      alertBox.style.transition = "opacity 0.5s ease";
-
-      document.body.appendChild(alertBox);
-      setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
-      setTimeout(() => {
-        alertBox.style.opacity = "0";
-        setTimeout(() => alertBox.remove(), 500);
-      }, 2500);
-
-      const now = new Date();
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      const footer = document.createElement("div");
-      footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
-      footer.style.marginTop = "40px";
-      footer.style.fontSize = "16px";
-      footer.style.color = "#fff";
-      footer.style.background = "rgba(0,0,0,0.6)";
-      footer.style.padding = "10px 20px";
-      footer.style.borderRadius = "10px";
-      footer.style.display = "inline-block";
-      footer.style.boxShadow = "0 0 8px rgba(255,255,255,0.2)";
-      footer.style.textAlign = "center";
-
-      const wrap = document.createElement("div");
-      wrap.style.textAlign = "center";
-      wrap.appendChild(footer);
-      document.body.appendChild(wrap);
-
-      document.getElementById("backBtn").addEventListener("click", () => {
-        window.history.back();
+      wrapper.querySelector("img").addEventListener("click", () => {
+        openFullscreen(img.src);
       });
     });
-  </script>
+
+    function openFullscreen(src) {
+      const overlay = document.createElement("div");
+      overlay.className = "fullscreen";
+      const bigImg = document.createElement("img");
+      bigImg.src = src;
+      const download = document.createElement("a");
+      download.href = src;
+      download.download = src.split("/").pop();
+      download.className = "download-btn";
+      download.textContent = "⬇️ Download Image";
+      overlay.appendChild(bigImg);
+      overlay.appendChild(download);
+      document.body.appendChild(overlay);
+      overlay.addEventListener("click", () => overlay.remove());
+    }
+
+    const alertBox = document.createElement("div");
+    alertBox.textContent = "Thank you for visiting my pics!";
+    alertBox.style.position = "fixed";
+    alertBox.style.top = "20px";
+    alertBox.style.left = "50%";
+    alertBox.style.transform = "translateX(-50%)";
+    alertBox.style.backgroundColor = "#333";
+    alertBox.style.color = "white";
+    alertBox.style.padding = "15px 30px";
+    alertBox.style.borderRadius = "8px";
+    alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+    alertBox.style.fontSize = "18px";
+    alertBox.style.zIndex = "1001";
+    alertBox.style.opacity = "0";
+    alertBox.style.transition = "opacity 0.5s ease";
+    document.body.appendChild(alertBox);
+    setTimeout(() => { alertBox.style.opacity = "1"; }, 300);
+    setTimeout(() => {
+      alertBox.style.opacity = "0";
+      setTimeout(() => alertBox.remove(), 500);
+    }, 2500);
+
+    const now = new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const footer = document.createElement("div");
+    footer.textContent = "Current time: " + now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
+    footer.style.marginTop = "40px";
+    footer.style.fontSize = "20px";
+    footer.style.color = "#fff";
+    footer.style.background = "rgba(0,0,0,0.6)";
+    footer.style.padding = "10px 20px";
+    footer.style.borderRadius = "10px";
+    footer.style.display = "inline-block";
+    footer.style.boxShadow = "0 0 8px rgba(255,255,255,0.2)";
+    footer.style.textAlign = "center";
+    const wrap = document.createElement("div");
+    wrap.style.textAlign = "center";
+    wrap.appendChild(footer);
+    document.body.appendChild(wrap);
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.history.back();
+    });
+  });
+</script>
+
 </body>
 </html>
