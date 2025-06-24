@@ -7,30 +7,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500&display=swap" rel="stylesheet" />
 <style>
   html, body {
-    margin: 0; padding: 0;
-    background: #000; color: #fff;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
     font-family: 'Rajdhani', sans-serif;
     overflow-x: hidden;
   }
   .loader {
-    position: fixed; top:0; left:0;
-    width:100vw; height:100vh;
-    background:#000; display:flex;
-    align-items:center; justify-content:center;
-    z-index:999; transition: opacity 1s ease;
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #000; color: #0ff;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 999;
+    transition: opacity 1s;
   }
-  .loader h1 {
-    font-size:3rem; color:#0ff;
-    animation: glow 2s infinite alternate;
-  }
-  @keyframes glow {
-    0% { text-shadow: 0 0 10px #0ff; }
-    100% { text-shadow: 0 0 40px #0ff; }
-  }
-  .hidden { opacity: 0; pointer-events: none; }
+  .loader.hidden { opacity: 0; pointer-events: none; }
 
   h1.title {
-    text-align: center; padding: 1rem; font-size: 2.5rem;
+    text-align: center;
+    padding: 1rem;
+    font-size: 2.5rem;
     background: linear-gradient(90deg, red, orange, yellow, lime, cyan, blue, violet);
     background-size: 200% 100%;
     -webkit-background-clip: text;
@@ -44,36 +41,30 @@
     background:rgba(0,0,0,0.5); border:1px solid #0ff;
     color:#0ff; padding:0.5rem 1rem;
     border-radius:24px; cursor:pointer;
-    z-index:10;
+    box-shadow:0 0 8px #0ff;
   }
-  .theme-toggle:hover { background:#0ff; color:#000; box-shadow:0 0 10px #0ff; }
 
   .gallery {
-    display:grid;
-    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
-    gap:1rem; padding:1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+    padding:1rem; gap:1rem;
     opacity:0; transform:translateY(20px);
-    animation:fadeUp 1s forwards ease-in-out 1s;
+    animation: fadeUp 1s forwards ease-in-out 1s;
   }
   @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
 
   .image-container {
-    background:rgba(0,0,0,0.5); border:1px solid #0ff;
+    background: rgba(0,0,0,0.5); border:1px solid #0ff;
     border-radius:12px; overflow:hidden; position:relative;
-    box-shadow:0 0 16px #0ff; perspective:800px;
+    box-shadow:0 0 12px #0ff; transition:transform 0.3s;
   }
-  .image-container img {
-    width:100%; transition:transform 0.5s; cursor:pointer;
-  }
-  .image-container:hover img { transform: scale(1.1) rotateY(10deg); }
-
+  .image-container:hover { transform:scale(1.05); }
+  .image-container img { width:100%; display:block; cursor:pointer; }
   .tooltip {
-    position:absolute; bottom:4px; left:50%;
-    transform:translateX(-50%);
+    position:absolute; bottom:4px; left:50%; transform:translateX(-50%);
     background:rgba(0,0,0,0.7); padding:0.2rem 0.6rem;
     border-radius:8px; opacity:0;
-    color:#0ff; font-size:0.8rem;
-    transition:opacity 0.3s;
+    color:#0ff; transition:opacity 0.3s;
   }
   .image-container:hover .tooltip { opacity:1; }
 
@@ -81,17 +72,17 @@
     position:fixed; bottom:1rem; right:1rem;
     background:#0ff; color:#000; padding:0.5rem 1rem;
     border:none; border-radius:24px;
-    cursor:pointer; box-shadow:0 0 12px #0ff;
-    opacity:0; transition:opacity 0.3s; z-index:10;
+    cursor:pointer; opacity:0; transition:opacity 0.3s;
+    box-shadow:0 0 8px #0ff;
   }
   #top-btn.show { opacity:1; }
-  #top-btn:hover { background:#000; color:#0ff; border:1px solid #0ff; }
 
   .fullscreen {
-    position:fixed; top:0; left:0; width:100vw; height:100vh;
+    position:fixed; top:0; left:0;
+    width:100vw; height:100vh;
     background:rgba(0,0,0,0.95); display:none;
-    align-items:center; justify-content:center; flex-direction:column;
-    z-index:100; padding:1rem;
+    align-items:center; justify-content:center;
+    z-index:100;
   }
   .fullscreen img {
     max-width:90%; max-height:70%;
@@ -99,27 +90,26 @@
     box-shadow:0 0 32px #0ff;
   }
   .close-btn, .download-btn, .prev-btn, .next-btn, #slideshow-btn {
-    position:absolute; background:#000; border:1px solid #0ff;
-    color:#0ff; padding:0.5rem 1rem; border-radius:24px;
-    cursor:pointer; box-shadow:0 0 12px #0ff; transition:0.3s;
+    position:absolute;
+    background:#000; border:1px solid #0ff;
+    color:#0ff; padding:0.5rem 1rem;
+    border-radius:24px; cursor:pointer;
+    box-shadow:0 0 8px #0ff;
   }
   .close-btn { top:1rem; right:1rem; }
   .download-btn { top:1rem; right:7rem; }
   #slideshow-btn { top:1rem; right:14rem; }
   .prev-btn { left:1rem; top:50%; transform:translateY(-50%); }
   .next-btn { right:1rem; top:50%; transform:translateY(-50%); }
-  .close-btn:hover, .download-btn:hover, .prev-btn:hover, .next-btn:hover, #slideshow-btn:hover {
-    background:#0ff; color:#000;
-  }
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader"><h1>Cytra's Ultimate Gallery ✨</h1></div>
-<button class="theme-toggle" id="themeToggle">Light Mode</button>
+<div class="loader" id="loader"><h1>Loading Gallery…</h1></div>
+<button class="theme-toggle" id="themeToggle">Dark Mode</button>
 <h1 class="title">Cytra's Ultimate Gallery ✨</h1>
 
-<div class="gallery" id="gallery">
+<div class="gallery">
   <div class="image-container"><img src="1.jpg" alt="Pic 1"><div class="tooltip">Pic 1</div></div>
   <div class="image-container"><img src="2.jpg" alt="Pic 2"><div class="tooltip">Pic 2</div></div>
   <div class="image-container"><img src="3.jpg" alt="Pic 3"><div class="tooltip">Pic 3</div></div>
@@ -163,7 +153,6 @@
   const prevBtn = document.querySelector('.prev-btn');
   const nextBtn = document.querySelector('.next-btn');
   const slideshowBtn = document.getElementById('slideshow-btn');
-
   const images = Array.from(document.querySelectorAll('.image-container img'));
   let currentIndex = 0;
   let slideshowInterval = null;
@@ -188,19 +177,29 @@
   slideshowBtn.onclick = () => {
     if (slideshowInterval) {
       clearInterval(slideshowInterval); slideshowInterval = null;
+      slideshowBtn.textContent = 'Slideshow';
     } else {
+      slideshowBtn.textContent = 'Stop';
       slideshowInterval = setInterval(() => nextBtn.onclick(), 2000);
     }
   };
   window.onscroll = () => topBtn.classList.toggle('show', window.scrollY>200);
   topBtn.onclick = () => window.scrollTo({top:0,behavior:'smooth'});
 
+  const themes = [
+    {bg:'#000', text:'#fff', label:'Dark'},
+    {bg:'#0a2', text:'#fff', label:'Green'},
+    {bg:'#025', text:'#fff', label:'Blue'},
+    {bg:'#306', text:'#fff', label:'Purple'},
+    {bg:'#c8bfff', text:'#000', label:'Lilac'}
+  ];
+  let themeIndex = 0;
   themeToggle.onclick = () => {
-    if (document.body.style.background==='#fff') {
-      document.body.style.background='#000'; document.body.style.color='#fff'; themeToggle.textContent='Light Mode';
-    } else {
-      document.body.style.background='#fff'; document.body.style.color='#000'; themeToggle.textContent='Dark Mode';
-    }
+    themeIndex = (themeIndex+1) % themes.length;
+    const theme = themes[themeIndex];
+    document.body.style.background = theme.bg;
+    document.body.style.color = theme.text;
+    themeToggle.textContent = theme.label + ' Mode';
   };
 </script>
 
