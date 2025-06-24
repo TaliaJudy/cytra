@@ -4,31 +4,33 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Jack's Gallery ✨</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
 <style>
   body {
-    background: #111;
-    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at center, #0A3D62, #0A1F2F);
+    font-family: 'Orbitron', sans-serif;
     color: white;
     margin: 0;
     padding: 0;
+    animation: fadeInBody 1s ease forwards;
   }
-  h1 { text-align: center; padding: 1rem; }
-  .age-box {
-    max-width: 600px;
-    margin: 0 auto 10px auto;
-    padding: 16px;
-    border-radius: 12px;
-    background-size: 300% 300%;
-    animation: gradientShift 6s ease infinite;
+  @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
+
+  h1 {
     text-align: center;
-    color: #222;
-    box-shadow: 0 0 16px rgba(0,0,0,0.3);
+    padding: 1rem;
+    font-size: 2.2rem;
+    background: linear-gradient(
+      90deg,
+      red, orange, yellow, green, cyan, blue, violet
+    );
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowShift 5s linear infinite;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
   }
-  #age-info { background: linear-gradient(135deg, #ff5a5a, #ff914d, #ffca4d); }
-  #birthday-countdown { background: linear-gradient(135deg, #4d94ff, #4dff94); }
-  @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-  .age-box span { background: rgba(255, 255, 255, 0.7); padding: 0 4px; border-radius: 4px; font-weight: 600; }
+  @keyframes rainbowShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
   .gallery {
     display: grid;
@@ -39,14 +41,24 @@
   .image-container {
     opacity: 0;
     transform: scale(0.95);
-    background: #222;
-    border-radius: 8px;
+    border-radius: 12px;
+    background: #111;
+    box-shadow: 0 0 10px rgba(0, 100, 255, 0.6), inset 0 0 12px rgba(0, 100, 255, 0.4);
     overflow: hidden;
+    transition: all 0.3s ease;
     animation: fadeInScale 0.7s forwards;
     position: relative;
   }
   @keyframes fadeInScale { to { opacity: 1; transform: scale(1); } }
-  .image-container img { width: 100%; cursor: pointer; display: block; }
+  .image-container:hover {
+    box-shadow: 0 0 20px rgba(0,180,255,0.9), inset 0 0 20px rgba(0,180,255,0.3);
+    transform: scale(1.03);
+  }
+  .image-container img {
+    width: 100%;
+    cursor: pointer;
+    display: block;
+  }
   .watermark {
     position: absolute;
     top: 2px;
@@ -57,24 +69,14 @@
     background: rgba(0,0,0,0.3);
     border-radius: 2px;
   }
-  .caption { text-align: center; padding: 4px 0; background: #000; font-size: 0.9rem; }
-  .reaction-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 4px;
-    background: #222;
+  .caption {
+    text-align: center;
+    padding: 4px 0;
+    background: #000;
+    font-size: 0.9rem;
   }
-  .reaction-bar button {
-    background: none;
-    border: none;
-    color: #ff5a5a;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
-  .reaction-count { color: #fff; font-size: 0.9rem; }
 
+  /* Controls for fullscreen */
   .fullscreen {
     position: fixed;
     top: 0; left: 0;
@@ -85,140 +87,112 @@
     justify-content: center;
     z-index: 999;
   }
-  .fullscreen img { max-width: 90%; max-height: 80%; border-radius: 8px; }
+  .fullscreen img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 8px;
+  }
   .close-btn, .download-btn, #slideshow-btn {
     position: absolute;
-    background: #333;
-    color: white;
+    top: 20px;
+    background: linear-gradient(135deg, #0A3D62, #1B4F72);
+    color: #fff;
     border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
+    padding: 10px 18px;
+    border-radius: 24px;
     cursor: pointer;
     font-size: 1rem;
+    box-shadow: 0 0 8px rgba(10,61,98,0.7);
+    transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
   }
-  .close-btn { top: 20px; right: 20px; }
-  .download-btn { top: 20px; right: 100px; }
-  #slideshow-btn { top: 20px; right: 200px; }
+  .close-btn { right: 20px; }
+  .download-btn { right: 120px; }
+  #slideshow-btn { right: 240px; }
+  .close-btn:hover, .download-btn:hover, #slideshow-btn:hover {
+    background: linear-gradient(135deg, #1B4F72, #0A3D62);
+    transform: scale(1.08);
+    box-shadow: 0 0 14px rgba(10,61,98,0.9);
+  }
 </style>
 </head>
 <body>
-
 <h1>Jack's Gallery ✨</h1>
-<div id="age-info" class="age-box"></div>
-<div id="birthday-countdown" class="age-box"></div>
 
-<audio id="bg-music" autoplay loop>
-  <source src="SHOKA.m4a" type="audio/m4a" />
-</audio>
+<!-- Slideshow button -->
+<button id="slideshow-btn">Start Slideshow</button>
 
+<!-- Gallery grid -->
 <div class="gallery">
-  <!-- Explicitly list all 18 images -->
-  <div class="image-container" data-id="1"><img src="1.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 1</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="2"><img src="2.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 2</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="3"><img src="3.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 3</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="4"><img src="4.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 4</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="5"><img src="5.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 5</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="6"><img src="6.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 6</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="7"><img src="7.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 7</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="8"><img src="8.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 8</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="9"><img src="9.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 9</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="10"><img src="10.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 10</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="11"><img src="11.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 11</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="12"><img src="12.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 12</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="13"><img src="13.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 13</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="14"><img src="14.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 14</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="15"><img src="15.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 15</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="16"><img src="16.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 16</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="17"><img src="17.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 17</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
-  <div class="image-container" data-id="18"><img src="18.jpg"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 18</div><div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div></div>
+  <!-- 18 images manually listed -->
+  <div class="image-container"><img src="1.jpg" alt="Pic 1"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 1</div></div>
+  <div class="image-container"><img src="2.jpg" alt="Pic 2"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 2</div></div>
+  <div class="image-container"><img src="3.jpg" alt="Pic 3"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 3</div></div>
+  <div class="image-container"><img src="4.jpg" alt="Pic 4"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 4</div></div>
+  <div class="image-container"><img src="5.jpg" alt="Pic 5"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 5</div></div>
+  <div class="image-container"><img src="6.jpg" alt="Pic 6"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 6</div></div>
+  <div class="image-container"><img src="7.jpg" alt="Pic 7"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 7</div></div>
+  <div class="image-container"><img src="8.jpg" alt="Pic 8"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 8</div></div>
+  <div class="image-container"><img src="9.jpg" alt="Pic 9"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 9</div></div>
+  <div class="image-container"><img src="10.jpg" alt="Pic 10"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 10</div></div>
+  <div class="image-container"><img src="11.jpg" alt="Pic 11"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 11</div></div>
+  <div class="image-container"><img src="12.jpg" alt="Pic 12"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 12</div></div>
+  <div class="image-container"><img src="13.jpg" alt="Pic 13"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 13</div></div>
+  <div class="image-container"><img src="14.jpg" alt="Pic 14"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 14</div></div>
+  <div class="image-container"><img src="15.jpg" alt="Pic 15"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 15</div></div>
+  <div class="image-container"><img src="16.jpg" alt="Pic 16"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 16</div></div>
+  <div class="image-container"><img src="17.jpg" alt="Pic 17"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 17</div></div>
+  <div class="image-container"><img src="18.jpg" alt="Pic 18"><div class="watermark">Jack's Gallery © 2025</div><div class="caption">Pic 18</div></div>
 </div>
 
-<!-- Fullscreen Modal -->
+<!-- Modal -->
 <div class="fullscreen" id="fullscreen">
   <button class="close-btn">X</button>
   <button class="download-btn">Download</button>
-  <button id="slideshow-btn">Start Slideshow</button>
   <img id="fullscreen-img" src="" alt="">
 </div>
 
 <script>
-  const birthDate = new Date('2009-03-30T00:00:00')
-  const ageInfo = document.getElementById('age-info')
-  const bdayCountdown = document.getElementById('birthday-countdown')
-  function updateAge() {
-    const now = new Date()
-    const diffMs = now - birthDate
-    const years = now.getFullYear() - birthDate.getFullYear() - (now < new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate()) ? 1 : 0)
-    const months = (now.getMonth() - birthDate.getMonth() + 12) % 12
-    const weeks = Math.floor(diffMs/(1000*60*60*24*7))
-    const days = Math.floor(diffMs/(1000*60*60*24))
-    const hours = Math.floor(diffMs/(1000*60*60))
-    const minutes = Math.floor(diffMs/(1000*60))
-    const milliseconds = diffMs
-    ageInfo.innerHTML = `
-      He is <span>${years}</span> years, <span>${months}</span> months<br>
-      <span>${weeks}</span> weeks, <span>${days}</span> days<br>
-      <span>${hours}</span> hours, <span>${minutes}</span> minutes, <span>${milliseconds}</span> ms
-    `
-  }
-  setInterval(updateAge, 100); updateAge()
-
-  function updateBirthdayCountdown() {
-    const now = new Date()
-    let nextBday = new Date(now.getFullYear(),2,30)
-    if (now > nextBday) nextBday = new Date(now.getFullYear()+1,2,30)
-    const diff = nextBday - now
-    const days = Math.floor(diff/(1000*60*60*24))
-    const hrs = Math.floor((diff%(1000*60*60*24))/(1000*60*60))
-    const mins = Math.floor((diff%(1000*60*60))/(1000*60))
-    const secs = Math.floor((diff%(1000*60))/1000)
-    bdayCountdown.innerHTML = `Next birthday in ${days} days, ${hrs} hrs, ${mins} mins, ${secs} secs 🎂`
-  }
-  setInterval(updateBirthdayCountdown, 1000); updateBirthdayCountdown()
-
-  // Reactions
-  document.querySelectorAll('.image-container').forEach(imgContainer => {
-    const id = imgContainer.dataset.id
-    const countEl = imgContainer.querySelector('.reaction-count')
-    countEl.textContent = localStorage.getItem('reaction-'+id) || 0
-    imgContainer.querySelector('.react-btn').addEventListener('click', () => {
-      let newCount = parseInt(countEl.textContent)+1
-      countEl.textContent = newCount
-      localStorage.setItem('reaction-'+id, newCount)
-    })
-  })
-
-  // Fullscreen preview & slideshow
   const fullscreen = document.getElementById('fullscreen')
   const fullscreenImg = document.getElementById('fullscreen-img')
   const closeBtn = fullscreen.querySelector('.close-btn')
   const downloadBtn = fullscreen.querySelector('.download-btn')
   const slideshowBtn = document.getElementById('slideshow-btn')
-  let slideshowTimer
-  let currentIndex = 1
+  let index = 0
+  let images = Array.from(document.querySelectorAll('.image-container img'))
+  let slideshowInterval
 
-  document.querySelectorAll('.image-container img').forEach((img, index) => {
+  images.forEach((img, i) => {
     img.addEventListener('click', () => {
+      index = i
       fullscreenImg.src = img.src
       fullscreen.style.display = 'flex'
-      currentIndex = index+1
     })
   })
-  closeBtn.onclick = () => { fullscreen.style.display='none'; clearInterval(slideshowTimer) }
+  closeBtn.onclick = () => fullscreen.style.display = 'none'
   downloadBtn.onclick = () => {
-    const link=document.createElement('a')
-    link.href=fullscreenImg.src
-    link.download='image.jpg'
+    const link = document.createElement('a')
+    link.href = fullscreenImg.src
+    link.download = fullscreenImg.src
     link.click()
   }
-  slideshowBtn.onclick = () => {
-    clearInterval(slideshowTimer)
-    slideshowTimer = setInterval(() => {
-      currentIndex = currentIndex % 18 + 1
-      fullscreenImg.src = currentIndex + '.jpg'
-    }, 2000)
-  }
 
+  slideshowBtn.onclick = () => {
+    if (slideshowInterval) {
+      clearInterval(slideshowInterval)
+      slideshowInterval = null
+      slideshowBtn.textContent = 'Start Slideshow'
+    } else {
+      slideshowBtn.textContent = 'Stop Slideshow'
+      fullscreen.style.display = 'flex'
+      slideshowInterval = setInterval(() => {
+        index = (index + 1) % images.length
+        fullscreenImg.src = images[index].src
+      }, 2000)
+    }
+  }
 </script>
 </body>
 </html>
