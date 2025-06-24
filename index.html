@@ -10,9 +10,9 @@
       background-image: url('https://files.catbox.moe/fmd1z6.jpg');
       background-size: cover;
       font-family: sans-serif;
+      overflow-x: hidden;
     }
 
-    /* AGE GATE STYLES */
     #ageGate {
       position: fixed;
       top: 0; left: 0;
@@ -37,17 +37,9 @@
       cursor: pointer;
     }
 
-    #yesBtn {
-      background-color: #28a745;
-      color: white;
-    }
+    #yesBtn { background-color: #28a745; color: white; }
+    #noBtn { background-color: #dc3545; color: white; }
 
-    #noBtn {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    /* GALLERY & FULLSCREEN STYLES BELOW - YOUR ORIGINAL STYLES */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -135,6 +127,7 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.4);
       transition: background-color 0.3s ease, transform 0.2s ease;
       z-index: 1001;
+      display: none;
     }
 
     #backBtn:hover {
@@ -145,7 +138,13 @@
 </head>
 <body>
 
-  <!-- AGE VERIFICATION OVERLAY -->
+  <!-- Hidden Audio Player -->
+  <audio id="bgMusic" autoplay loop style="display: none;">
+    <source src="your-music-file.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Age Verification Modal -->
   <div id="ageGate">
     <h2>Are you 16 years or older?</h2>
     <div>
@@ -154,7 +153,7 @@
     </div>
   </div>
 
-  <!-- IMAGE GALLERY -->
+  <!-- Image Gallery -->
   <div class="gallery" style="display: none;">
     <img src="1.jpg" alt="Image 1">
     <img src="2.jpg" alt="Image 2">
@@ -174,14 +173,31 @@
     <img src="18.jpg" alt="Image 18">
   </div>
 
-  <button id="backBtn" title="Back" style="display: none;">🔙</button>
+  <button id="backBtn" title="Back">🔙</button>
 
   <script>
-    // AGE GATE LOGIC
     document.getElementById("yesBtn").onclick = function () {
       document.getElementById("ageGate").style.display = "none";
       document.querySelector(".gallery").style.display = "grid";
       document.getElementById("backBtn").style.display = "block";
+
+      // Fade-in background music
+      const music = document.getElementById("bgMusic");
+      music.volume = 0;
+      music.play().then(() => {
+        let vol = 0;
+        const fadeIn = setInterval(() => {
+          vol += 0.05;
+          if (vol >= 0.5) {
+            music.volume = 0.5;
+            clearInterval(fadeIn);
+          } else {
+            music.volume = vol;
+          }
+        }, 200);
+      }).catch(() => {
+        console.warn("Autoplay blocked — will start after interaction.");
+      });
     };
 
     document.getElementById("noBtn").onclick = function () {
@@ -189,7 +205,6 @@
       window.location.href = "https://www.google.com";
     };
 
-    // THE REST OF YOUR SCRIPT BELOW
     document.addEventListener("DOMContentLoaded", () => {
       const captions = [
         "The journey begins 🌄", "Moments captured forever 📸", "A smile in every frame 😊",
