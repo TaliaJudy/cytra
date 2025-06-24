@@ -1,239 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jack's Gallery ✨</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-  body {
-    background: #111;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    margin: 0;
-    padding: 0;
-  }
-  h1 { text-align: center; padding: 1rem; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jack's Gallery ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: #111;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    h1 { text-align: center; padding: 1rem; }
 
-  /* Age and Countdown Boxes */
-  .age-box {
-    max-width: 600px;
-    margin: 0 auto 10px auto;
-    padding: 16px;
-    border-radius: 12px;
-    background-size: 300% 300%;
-    animation: gradientShift 6s ease infinite;
-    text-align: center;
-    font-size: 1rem;
-    color: #222;
-    box-shadow: 0 0 16px rgba(0,0,0,0.3);
-  }
-  #age-info {
-    background: linear-gradient(135deg, #ff5a5a, #ff914d, #ffca4d);
-  }
-  #birthday-countdown {
-    background: linear-gradient(135deg, #4d94ff, #4dff94);
-  }
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .age-box span {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 0 4px;
-    border-radius: 4px;
-    font-weight: 600;
-  }
+    /* Age & Countdown Boxes */
+    .age-box {
+      max-width: 600px;
+      margin: 0 auto 10px auto;
+      padding: 16px;
+      border-radius: 12px;
+      background-size: 300% 300%;
+      animation: gradientShift 6s ease infinite;
+      text-align: center;
+      font-size: 1rem;
+      color: #222;
+      box-shadow: 0 0 16px rgba(0,0,0,0.3);
+    }
+    #age-info { background: linear-gradient(135deg, #ff5a5a, #ff914d, #ffca4d); }
+    #birthday-countdown { background: linear-gradient(135deg, #4d94ff, #4dff94); }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .age-box span {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 0 4px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
 
-  /* Gallery Grid */
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-    padding: 10px;
-  }
-  .image-container {
-    opacity: 0;
-    transform: scale(0.95);
-    background: #222;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    animation: fadeInScale 0.7s forwards;
-  }
-  @keyframes fadeInScale {
-    to { opacity: 1; transform: scale(1); }
-  }
-  .image-container img {
-    width: 100%;
-    cursor: pointer;
-    display: block;
-  }
-  .caption {
-    text-align: center;
-    padding: 4px 0;
-    background: #000;
-    font-size: 0.9rem;
-  }
-  .reaction-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 4px;
-    background: #222;
-  }
-  .reaction-bar button {
-    background: none;
-    border: none;
-    color: #ff5a5a;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
-  .reaction-count { color: #fff; font-size: 0.9rem; }
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .image-container {
+      opacity: 0;
+      transform: scale(0.95);
+      background: #222;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: fadeInScale 0.7s forwards;
+    }
+    @keyframes fadeInScale {
+      to { opacity: 1; transform: scale(1); }
+    }
+    .image-container img {
+      width: 100%;
+      cursor: pointer;
+      display: block;
+    }
+    .caption {
+      text-align: center;
+      padding: 4px 0;
+      background: #000;
+      font-size: 0.9rem;
+    }
+    .reaction-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 4px;
+      background: #222;
+    }
+    .reaction-bar button {
+      background: none;
+      border: none;
+      color: #ff5a5a;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    .reaction-count { color: #fff; font-size: 0.9rem; }
 
-  /* Fullscreen Preview */
-  .fullscreen {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.9);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  }
-  .fullscreen img {
-    max-width: 90%;
-    max-height: 80%;
-    border-radius: 8px;
-  }
-  .close-btn, .download-btn {
-    position: absolute;
-    top: 20px;
-    background: #333;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  .close-btn { right: 20px; }
-  .download-btn { right: 100px; }
-</style>
+    /* Fullscreen Preview */
+    .fullscreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .fullscreen img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 8px;
+    }
+    .close-btn, .download-btn {
+      position: absolute;
+      top: 20px;
+      background: #333;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .close-btn { right: 20px; }
+    .download-btn { right: 100px; }
+  </style>
 </head>
 <body>
 
-<h1>Jack's Gallery ✨</h1>
-<div id="age-info" class="age-box"></div>
-<div id="birthday-countdown" class="age-box"></div>
+  <h1>Jack's Gallery ✨</h1>
+  <div id="age-info" class="age-box"></div>
+  <div id="birthday-countdown" class="age-box"></div>
 
-<audio id="bg-music" autoplay loop></audio>
+  <audio id="bg-music" autoplay loop muted></audio>
 
-<div class="gallery">
-  <!-- Images -->
-  ${[...Array(18)].map((_,i) => {
-    let id=i+1;
-    return `
-    <div class="image-container" data-id="${id}">
-      <img src="${id}.jpg" alt="Pic ${id}">
-      <div class="caption">Pic ${id}</div>
-      <div class="reaction-bar">
-        <button class="react-btn">❤️</button><span class="reaction-count">0</span>
-      </div>
-    </div>`}).join('')}
-</div>
+  <div class="gallery">
+    <!-- Manually pasted 18 image blocks -->
+    <div class="image-container" data-id="1">
+      <img src="1.jpg" alt="Pic 1">
+      <div class="caption">Pic 1</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="2">
+      <img src="2.jpg" alt="Pic 2">
+      <div class="caption">Pic 2</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="3">
+      <img src="3.jpg" alt="Pic 3">
+      <div class="caption">Pic 3</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="4">
+      <img src="4.jpg" alt="Pic 4">
+      <div class="caption">Pic 4</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="5">
+      <img src="5.jpg" alt="Pic 5">
+      <div class="caption">Pic 5</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="6">
+      <img src="6.jpg" alt="Pic 6">
+      <div class="caption">Pic 6</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="7">
+      <img src="7.jpg" alt="Pic 7">
+      <div class="caption">Pic 7</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="8">
+      <img src="8.jpg" alt="Pic 8">
+      <div class="caption">Pic 8</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="9">
+      <img src="9.jpg" alt="Pic 9">
+      <div class="caption">Pic 9</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="10">
+      <img src="10.jpg" alt="Pic 10">
+      <div class="caption">Pic 10</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="11">
+      <img src="11.jpg" alt="Pic 11">
+      <div class="caption">Pic 11</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="12">
+      <img src="12.jpg" alt="Pic 12">
+      <div class="caption">Pic 12</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="13">
+      <img src="13.jpg" alt="Pic 13">
+      <div class="caption">Pic 13</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="14">
+      <img src="14.jpg" alt="Pic 14">
+      <div class="caption">Pic 14</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="15">
+      <img src="15.jpg" alt="Pic 15">
+      <div class="caption">Pic 15</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="16">
+      <img src="16.jpg" alt="Pic 16">
+      <div class="caption">Pic 16</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="17">
+      <img src="17.jpg" alt="Pic 17">
+      <div class="caption">Pic 17</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+    <div class="image-container" data-id="18">
+      <img src="18.jpg" alt="Pic 18">
+      <div class="caption">Pic 18</div>
+      <div class="reaction-bar"><button class="react-btn">❤️</button><span class="reaction-count">0</span></div>
+    </div>
+  </div>
 
-<div class="fullscreen" id="fullscreen">
-  <button class="close-btn">X</button>
-  <button class="download-btn">Download</button>
-  <img id="fullscreen-img" src="" alt="">
-</div>
+  <div class="fullscreen" id="fullscreen">
+    <button class="close-btn">X</button>
+    <button class="download-btn">Download</button>
+    <img id="fullscreen-img" src="" alt="">
+  </div>
 
-<script>
-  // Music setup
-  const audio = document.getElementById('bg-music')
-  const tracks = ['SHOKA.m4a','Anxiety.m4a','Die_with_a_smile.m4a','track4.mp3']
-  function playRandomTrack() {
-    audio.src = tracks[Math.floor(Math.random() * tracks.length)]
-    audio.play().catch(() => {})
-  }
-  playRandomTrack()
-  audio.addEventListener('ended', playRandomTrack)
+  <script>
+    // Music auto-play & unmute
+    const audio = document.getElementById('bg-music')
+    const tracks = ['SHOKA.m4a','Anxiety.m4a','Die_with_a_smile.m4a','AUD-20250421-WA0004.m4a']
+    function playRandomTrack() {
+      audio.src = tracks[Math.floor(Math.random() * tracks.length)]
+      audio.play().catch(() => {})
+    }
+    playRandomTrack()
+    audio.addEventListener('ended', playRandomTrack)
+    setTimeout(() => { audio.muted = false; audio.play().catch(() => {}) }, 2000)
 
-  // Age and countdown
-  const birthDate = new Date('2009-03-30T00:00:00')
-  const ageInfo = document.getElementById('age-info')
-  const bdayCountdown = document.getElementById('birthday-countdown')
-  function updateAgeInfo() {
-    const now = new Date()
-    let ms = now - birthDate
-    const years = now.getFullYear() - birthDate.getFullYear() -
-      (now < new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate()) ? 1 : 0)
-    let months = now.getMonth() - birthDate.getMonth()
-    if (months < 0) months += 12
-    const weeks = Math.floor(ms / (1000 * 60 * 60 * 24 * 7))
-    const days = Math.floor(ms / (1000 * 60 * 60 * 24))
-    const hours = Math.floor(ms / (1000 * 60 * 60))
-    const minutes = Math.floor(ms / (1000 * 60))
-    const milliseconds = ms
-    const isSixteenPlus = years >= 16
-    const status = isSixteenPlus ? '<span>✅ Age verified (16+)</span>' : '<span>❌ Age too young</span>'
-    ageInfo.innerHTML = \`He is <span>\${years}</span> years, <span>\${months}</span> months, <span>\${weeks}</span> weeks, <span>\${days}</span> days, <span>\${hours}</span> hours, <span>\${minutes}</span> minutes, and <span>\${milliseconds}</span> milliseconds old<br>\${status}\`
-  }
-  setInterval(updateAgeInfo, 100); updateAgeInfo()
+    // Age & countdown
+    const birthDate = new Date('2009-03-30T00:00:00')
+    const ageInfo = document.getElementById('age-info')
+    const bdayCountdown = document.getElementById('birthday-countdown')
+    function updateAgeInfo() {
+      const now = new Date(), ms = now - birthDate
+      const years = now.getFullYear() - birthDate.getFullYear() - (now < new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate()) ? 1 : 0)
+      let months = now.getMonth() - birthDate.getMonth(); if(months<0) months+=12
+      const weeks = Math.floor(ms/(1000*60*60*24*7))
+      const days = Math.floor(ms/(1000*60*60*24))
+      const hours = Math.floor(ms/(1000*60*60))
+      const minutes = Math.floor(ms/(1000*60))
+      const status = years >= 16 ? '<span>✅ Age verified (16+)</span>' : '<span>❌ Age too young</span>'
+      ageInfo.innerHTML = `He is <span>${years}</span> years, <span>${months}</span> months, <span>${weeks}</span> weeks, <span>${days}</span> days, <span>${hours}</span> hours, <span>${minutes}</span> minutes old<br>${status}`
+    }
+    setInterval(updateAgeInfo, 100); updateAgeInfo()
+    function updateBirthdayCountdown() {
+      const now = new Date()
+      let nextBday = new Date(now.getFullYear(),2,30)
+      if(now>nextBday) nextBday=new Date(now.getFullYear()+1,2,30)
+      const diff = nextBday-now
+      const days = Math.floor(diff/(1000*60*60*24))
+      const hrs  = Math.floor((diff%(1000*60*60*24))/(1000*60*60))
+      const mins = Math.floor((diff%(1000*60*60))/(1000*60))
+      const secs = Math.floor((diff%(1000*60))/1000)
+      bdayCountdown.innerHTML = `Next birthday in <span>${days}</span> days, <span>${hrs}</span> hrs, <span>${mins}</span> mins, <span>${secs}</span> secs 🎂`
+    }
+    setInterval(updateBirthdayCountdown,1000); updateBirthdayCountdown()
 
-  function updateBirthdayCountdown() {
-    const now = new Date()
-    let nextBday = new Date(now.getFullYear(), 2, 30)
-    if (now > nextBday) nextBday = new Date(now.getFullYear() + 1, 2, 30)
-    const diff = nextBday - now
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-    const secs = Math.floor((diff % (1000 * 60)) / 1000)
-    bdayCountdown.innerHTML = \`Next birthday in <span>\${days}</span> days, <span>\${hours}</span> hrs, <span>\${mins}</span> mins, <span>\${secs}</span> secs 🎂\`
-  }
-  setInterval(updateBirthdayCountdown, 1000); updateBirthdayCountdown()
-
-  // Reactions
-  document.querySelectorAll('.image-container').forEach(imgContainer => {
-    const id = imgContainer.dataset.id
-    const countEl = imgContainer.querySelector('.reaction-count')
-    countEl.textContent = localStorage.getItem('reaction-'+id) || 0
-    imgContainer.querySelector('.react-btn').addEventListener('click', () => {
-      let newCount = parseInt(countEl.textContent) + 1
-      countEl.textContent = newCount
-      localStorage.setItem('reaction-'+id, newCount)
+    // Reactions
+    document.querySelectorAll('.image-container').forEach(el=>{
+      const id=el.dataset.id, cnt=el.querySelector('.reaction-count')
+      cnt.textContent = localStorage.getItem('reaction-'+id)||0
+      el.querySelector('.react-btn').addEventListener('click',()=>{
+        let c=+cnt.textContent+1;cnt.textContent=c;localStorage.setItem('reaction-'+id,c)
+      })
     })
-  })
 
-  // Fullscreen
-  const fullscreen = document.getElementById('fullscreen')
-  const fullscreenImg = document.getElementById('fullscreen-img')
-  const closeBtn = fullscreen.querySelector('.close-btn')
-  const downloadBtn = fullscreen.querySelector('.download-btn')
-  document.querySelectorAll('.image-container img').forEach(img => {
-    img.addEventListener('click', () => {
-      fullscreenImg.src = img.src
-      fullscreen.style.display = 'flex'
+    // Fullscreen
+    const fullscreen=document.getElementById('fullscreen'), fImg=document.getElementById('fullscreen-img')
+    document.querySelectorAll('.image-container img').forEach(img=>{
+      img.addEventListener('click',()=>{
+        fImg.src=img.src; fullscreen.style.display='flex'
+      })
     })
-  })
-  closeBtn.addEventListener('click', () => fullscreen.style.display = 'none')
-  downloadBtn.addEventListener('click', () => {
-    const link = document.createElement('a')
-    link.href = fullscreenImg.src
-    link.download = fullscreenImg.src.split('/').pop() || 'image'
-    link.click()
-  })
+    fullscreen.querySelector('.close-btn').addEventListener('click',()=>fullscreen.style.display='none')
+    fullscreen.querySelector('.download-btn').addEventListener('click',()=>{
+      const link=document.createElement('a');link.href=fImg.src;link.download=fImg.src.split('/').pop();link.click()
+    })
 
-  // Fade-in stagger
-  document.querySelectorAll('.image-container').forEach((el, index) => {
-    el.style.animationDelay = (index * 0.08) + 's'
-  })
-</script>
+    // Fade-in stagger
+    document.querySelectorAll('.image-container').forEach((el,i)=>el.style.animationDelay=(i*0.08)+'s')
+  </script>
 </body>
-</html>
+  </html>
+  
