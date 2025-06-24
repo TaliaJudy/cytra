@@ -68,22 +68,22 @@
     }
 
     .download-btn {
-      background-color: #ffffff20;
+      background-color: #ffffff30;
       color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      border: 1px solid white;
-      border-radius: 8px;
+      padding: 18px 36px;
+      font-size: 22px;
+      border: 2px solid white;
+      border-radius: 12px;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.2s;
     }
 
     .download-btn:hover {
-      background-color: #ffffff40;
+      background-color: #ffffff50;
+      transform: scale(1.05);
     }
 
-    /* Back button floating bottom left */
     #backBtn {
       position: fixed;
       bottom: 20px;
@@ -92,11 +92,11 @@
       color: white;
       border: none;
       border-radius: 50%;
-      font-size: 22px;
-      width: 48px;
-      height: 48px;
+      font-size: 30px;
+      width: 70px;
+      height: 70px;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
       transition: background-color 0.3s ease, transform 0.2s ease;
       z-index: 1001;
     }
@@ -109,7 +109,6 @@
 </head>
 <body>
 
-  <!-- Image gallery -->
   <div class="gallery">
     <img src="1.jpg" alt="Image 1">
     <img src="2.jpg" alt="Image 2">
@@ -129,7 +128,6 @@
     <img src="18.jpg" alt="Image 18">
   </div>
 
-  <!-- Back button -->
   <button id="backBtn" title="Back">🔙</button>
 
   <script>
@@ -178,7 +176,7 @@
         download.href = src;
         download.download = src.split("/").pop();
         download.className = "download-btn";
-        download.textContent = "⬇️ Download";
+        download.textContent = "⬇️ Download Image";
 
         overlay.appendChild(bigImg);
         overlay.appendChild(download);
@@ -193,7 +191,6 @@
         });
       }
 
-      // Welcome alert
       const alertBox = document.createElement("div");
       alertBox.textContent = "Thank you for visiting my pics!";
       alertBox.style.position = "fixed";
@@ -217,7 +214,6 @@
         setTimeout(() => alertBox.remove(), 500);
       }, 2500);
 
-      // Date/time
       const now = new Date();
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       const footer = document.createElement("div");
@@ -237,9 +233,8 @@
       wrap.appendChild(footer);
       document.body.appendChild(wrap);
 
-      // Back button click
       document.getElementById("backBtn").addEventListener("click", () => {
-        window.history.back(); // Or: location.href = 'your-home.html';
+        window.history.back();
       });
     });
   </script>
