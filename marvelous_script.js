@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll("img");
 
@@ -10,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       img.style.opacity = 1;
     };
 
-    // Click to enlarge (basic lightbox)
+    // Click to enlarge (lightbox)
     img.addEventListener("click", () => {
       const overlay = document.createElement("div");
       overlay.style.position = "fixed";
@@ -36,10 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.addEventListener("click", () => document.body.removeChild(overlay));
     });
   });
-});
 
-
-document.addEventListener("DOMContentLoaded", () => {
+  // Styled welcome alert
   const alertBox = document.createElement("div");
   alertBox.textContent = "Thank you for visiting my pics!";
   alertBox.style.position = "fixed";
@@ -66,10 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
     alertBox.style.opacity = "0";
     setTimeout(() => alertBox.remove(), 1000);
   }, 3500);
-});
 
-
-  // Add date, time, and day display at the end of the body
+  // Show date, time, and day
   const footer = document.createElement("div");
   const now = new Date();
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -91,48 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   wrapper.appendChild(footer);
   document.body.appendChild(wrapper);
 
-
-  const downloadBtn = document.createElement("a");
-  downloadBtn.textContent = "🗿 Download All";
-  downloadBtn.href = "#";
-  downloadBtn.style.display = "inline-block";
-  downloadBtn.style.margin = "20px auto";
-  downloadBtn.style.padding = "12px 24px";
-  downloadBtn.style.fontSize = "18px";
-  downloadBtn.style.color = "#fff";
-  downloadBtn.style.backgroundColor = "#444";
-  downloadBtn.style.border = "none";
-  downloadBtn.style.borderRadius = "8px";
-  downloadBtn.style.textDecoration = "none";
-  downloadBtn.style.boxShadow = "0 4px 8px rgba(0,0,0,0.3)";
-  downloadBtn.style.cursor = "pointer";
-  downloadBtn.style.transition = "background-color 0.3s ease";
-  downloadBtn.style.textAlign = "center";
-
-  downloadBtn.addEventListener("mouseover", () => {
-    downloadBtn.style.backgroundColor = "#666";
-  });
-  downloadBtn.addEventListener("mouseout", () => {
-    downloadBtn.style.backgroundColor = "#444";
-  });
-
-  // Add zip download link later after it's created
-  document.body.insertBefore(downloadBtn, document.body.firstChild);
-
-
-  downloadBtn.addEventListener("click", () => {
-    const images = document.querySelectorAll("img");
-    images.forEach((img, index) => {
-      const link = document.createElement("a");
-      link.href = img.src;
-      link.download = img.src.split("/").pop(); // Set filename from image src
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  });
-
-
+  // Captions that rotate every 20 seconds
   const captions = [
     "The journey begins 🌄",
     "Moments captured forever 📸",
@@ -177,3 +131,4 @@ document.addEventListener("DOMContentLoaded", () => {
       caption.textContent = captions[i % captions.length];
     }, 20000);
   });
+});
