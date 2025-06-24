@@ -1,11 +1,191 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Jack's Pics</title>
-<link href="style.css" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <title>Jack's Pics</title>
+  <style>
+    body {
+      text-align: center;
+      padding: 20px;
+      background-image: url('https://files.catbox.moe/fmd1z6.jpg');
+      background-size: cover;
+      font-family: sans-serif;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .caption {
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 8px 12px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      border-radius: 0 0 12px 12px;
+    }
+  </style>
 </head>
 <body>
-<script src="marvelous_script.js"></script>
-<div class="gallery"><img alt="Image 1" src="1.jpg"/><img alt="Image 10" src="10.jpg"/><img alt="Image 11" src="11.jpg"/><img alt="Image 12" src="12.jpg"/><img alt="Image 13" src="13.jpg"/><img alt="Image 14" src="14.jpg"/><img alt="Image 15" src="15.jpg"/><img alt="Image 16" src="16.jpg"/><img alt="Image 17" src="17.jpg"/><img alt="Image 18" src="18.jpg"/><img alt="Image 2" src="2.jpg"/><img alt="Image 3" src="3.jpg"/><img alt="Image 4" src="4.jpg"/><img alt="Image 5" src="5.jpg"/><img alt="Image 7" src="7.jpg"/><img alt="Image 9" src="9.jpg"/></div></body>
+
+  <div class="gallery">
+    <img src="1.jpg" alt="Image 1">
+    <img src="2.jpg" alt="Image 2">
+    <img src="3.jpg" alt="Image 3">
+    <img src="4.jpg" alt="Image 4">
+    <img src="5.jpg" alt="Image 5">
+    <img src="7.jpg" alt="Image 7">
+    <img src="9.jpg" alt="Image 9">
+    <img src="10.jpg" alt="Image 10">
+    <img src="11.jpg" alt="Image 11">
+    <img src="12.jpg" alt="Image 12">
+    <img src="13.jpg" alt="Image 13">
+    <img src="14.jpg" alt="Image 14">
+    <img src="15.jpg" alt="Image 15">
+    <img src="16.jpg" alt="Image 16">
+    <img src="17.jpg" alt="Image 17">
+    <img src="18.jpg" alt="Image 18">
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const images = document.querySelectorAll("img");
+
+      // Fade-in animation
+      images.forEach(img => {
+        img.style.opacity = 0;
+        img.onload = () => {
+          img.style.transition = "opacity 1s";
+          img.style.opacity = 1;
+        };
+
+        // Lightbox
+        img.addEventListener("click", () => {
+          const overlay = document.createElement("div");
+          overlay.style.position = "fixed";
+          overlay.style.top = 0;
+          overlay.style.left = 0;
+          overlay.style.width = "100%";
+          overlay.style.height = "100%";
+          overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+          overlay.style.display = "flex";
+          overlay.style.alignItems = "center";
+          overlay.style.justifyContent = "center";
+          overlay.style.zIndex = 1000;
+
+          const enlarged = document.createElement("img");
+          enlarged.src = img.src;
+          enlarged.style.maxWidth = "90%";
+          enlarged.style.maxHeight = "90%";
+          enlarged.style.boxShadow = "0 0 20px white";
+
+          overlay.appendChild(enlarged);
+          document.body.appendChild(overlay);
+          overlay.addEventListener("click", () => document.body.removeChild(overlay));
+        });
+      });
+
+      // Welcome alert
+      const alertBox = document.createElement("div");
+      alertBox.textContent = "Thank you for visiting my pics!";
+      alertBox.style.position = "fixed";
+      alertBox.style.top = "20px";
+      alertBox.style.left = "50%";
+      alertBox.style.transform = "translateX(-50%)";
+      alertBox.style.backgroundColor = "#333";
+      alertBox.style.color = "white";
+      alertBox.style.padding = "15px 30px";
+      alertBox.style.borderRadius = "8px";
+      alertBox.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+      alertBox.style.fontSize = "18px";
+      alertBox.style.zIndex = "1001";
+      alertBox.style.opacity = "0";
+      alertBox.style.transition = "opacity 1s ease";
+
+      document.body.appendChild(alertBox);
+      setTimeout(() => { alertBox.style.opacity = "1"; }, 500);
+      setTimeout(() => {
+        alertBox.style.opacity = "0";
+        setTimeout(() => alertBox.remove(), 1000);
+      }, 3500);
+
+      // Date/time at bottom
+      const footer = document.createElement("div");
+      const now = new Date();
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const formatted = now.toLocaleTimeString() + " on " + days[now.getDay()] + ", " + now.toLocaleDateString();
+      footer.textContent = "Current time: " + formatted;
+      footer.style.marginTop = "40px";
+      footer.style.fontSize = "16px";
+      footer.style.color = "#fff";
+      footer.style.background = "rgba(0,0,0,0.6)";
+      footer.style.padding = "10px 20px";
+      footer.style.borderRadius = "10px";
+      footer.style.display = "inline-block";
+      footer.style.boxShadow = "0 0 8px rgba(255,255,255,0.2)";
+      footer.style.textAlign = "center";
+
+      const wrapper = document.createElement("div");
+      wrapper.style.textAlign = "center";
+      wrapper.appendChild(footer);
+      document.body.appendChild(wrapper);
+
+      // Rotating captions
+      const captions = [
+        "The journey begins 🌄",
+        "Moments captured forever 📸",
+        "A smile in every frame 😊",
+        "Beauty in simplicity 🌼",
+        "Wander and wonder 🗺️",
+        "Stillness speaks 🎑",
+        "Unforgettable memories 💫",
+        "Nature's charm 🌿",
+        "Snapshots of joy 🥰",
+        "Timeless treasures ⏳"
+      ];
+
+      const imgs = document.querySelectorAll(".gallery img");
+      imgs.forEach((img, idx) => {
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
+        wrapper.style.overflow = "hidden";
+
+        const caption = document.createElement("div");
+        caption.className = "caption";
+        caption.textContent = captions[idx % captions.length];
+        wrapper.appendChild(img.cloneNode(true));
+        wrapper.appendChild(caption);
+
+        img.replaceWith(wrapper);
+
+        let i = idx;
+        setInterval(() => {
+          i++;
+          caption.textContent = captions[i % captions.length];
+        }, 20000);
+      });
+    });
+  </script>
+</body>
 </html>
