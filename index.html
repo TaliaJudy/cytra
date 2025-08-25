@@ -198,6 +198,11 @@
     document.body.style.color = theme.text;
     themeToggle.textContent = theme.label + ' Mode';
   };
+  var password = prompt("Enter password to view this page:");
+    if (password !== "Jacka2009") {
+        alert("Incorrect password. Redirecting to home...");
+        window.location.href = "../index.html";
+    }
 </script>
 
 </body>
